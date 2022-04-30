@@ -50,7 +50,7 @@ fun SubCard(subData: SubData){
                 .height(0.5.dp)
                 .fillMaxWidth(.5f))
 
-            Text("Lehrer: ${subData.lehrer}", textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            Text("Lehrer*in: ${subData.lehrer}", textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
 
 
         }
