@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">jetpacklernentutorial</string>
+    <string name="app_name">SchulApp</string>
+    <string name="foodplan">Essensplan</string>
+    <string name="substitutions">Vertretungen</string>
+    <string name="substitutionsnext">Vertr. Morgen</string>
+    <string name="selectclass">Klasse Auswählen</string>
+    <string name="plsselectclass">Bitte Wähle Eine Klasse Aus</string>
+    <string name="cancel">Abbruch</string>
+    <string name="classselection">Klassenauswahl</string>
+    <string name="teacher">Lehrer*in:\n</string>
+    <string name="lesson">Stunde:\n</string>
+    <string name="lessontype">Fach:\n</string>
+    <string name="selectedclass">Ausgewählte Klasse:&#160;</string>
+    <string name="empty">Huch... Solch Eine Lehre!</string>
+
+
 </resources>

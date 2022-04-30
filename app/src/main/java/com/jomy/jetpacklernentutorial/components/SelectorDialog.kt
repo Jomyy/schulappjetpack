@@ -8,9 +8,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.jomy.jetpacklernentutorial.R
 
 @Composable
 fun SelectorDialog(
@@ -33,10 +35,10 @@ fun SelectorDialog(
                 // Color Selection
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Klassenauswahl", style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 10.dp))
+                    Text(stringResource(id = R.string.selectclass), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 10.dp))
                     if(klassen.isEmpty()){
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Huch... Solch Eine Lehre!")
+                            Text(stringResource(id = R.string.empty))
                         }
                     }else {
                         LazyColumn(
@@ -73,7 +75,7 @@ fun SelectorDialog(
                         ) {
                             TextButton(onClick = { onPositiveClick("") },) {
                                 Text(
-                                    "Abbruch",
+                                    stringResource(id = R.string.cancel),
                                     textAlign = TextAlign.End,
                                     color = MaterialTheme.colorScheme.onPrimary
                                 )

@@ -76,7 +76,7 @@ class FoodPageViewModel: ViewModel(){
             }
 
         }
-        Log.d("ERRORFETCH",errorMessage)
+
 
     }
 }

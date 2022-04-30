@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.jomy.jetpacklernentutorial.R
 import com.jomy.jetpacklernentutorial.dataclasses.SubData
 
 @Composable
@@ -38,19 +40,19 @@ fun SubCard(subData: SubData){
                 .padding(top = 10.dp, bottom = 10.dp)
                 .height(0.5.dp)
                 .fillMaxWidth(.5f))
-            Text("Fach: ${subData.fach}", textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(id = R.string.lessontype)+ subData.fach, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
             Divider(modifier = Modifier
                 .padding(top = 10.dp, bottom = 10.dp)
                 .height(0.5.dp)
                 .fillMaxWidth(.5f))
 
-            Text("Stunde: ${subData.stunde}", textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(id = R.string.lesson) + subData.stunde, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
             Divider(modifier = Modifier
                 .padding(top = 10.dp, bottom = 10.dp)
                 .height(0.5.dp)
                 .fillMaxWidth(.5f))
 
-            Text("Lehrer*in: ${subData.lehrer}", textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(id = R.string.teacher) + subData.lehrer, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
 
 
         }

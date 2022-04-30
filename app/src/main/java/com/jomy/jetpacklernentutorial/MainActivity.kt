@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                             foodSelected.value = true;
                             subsSelected.value = false;
                             subsNextSelected.value = false;
-                        }, label = { Text("Essensplan",style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
+                        }, label = { Text(stringResource(id = R.string.foodplan),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
                             Icon(
                                 Icons.Rounded.Fastfood, "Home"
                             )
@@ -66,7 +67,7 @@ class MainActivity : ComponentActivity() {
                             foodSelected.value = false;
                             subsSelected.value = true;
                             subsNextSelected.value = false;
-                        }, label = { Text("Vertretungen",style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
+                        }, label = { Text(stringResource(id = R.string.substitutions),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
                             Icon(
                                 Icons.Rounded.Coronavirus, "Subs"
                             )
@@ -79,10 +80,10 @@ class MainActivity : ComponentActivity() {
                                 subsSelected.value = false;
                                 subsNextSelected.value = true;
                             },
-                            label = { Text("Vertr. Morgen",style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) },
+                            label = { Text(stringResource(id = R.string.substitutionsnext),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Coronavirus, "Dashboard"
+                                    Icons.Rounded.Coronavirus, "substitutionsnextpage"
                                 )
                             }, modifier = Modifier.padding(bottom = 15.dp))
                     }
@@ -97,7 +98,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }, topBar = {
-                    CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text("SchulApp")},modifier = Modifier.padding(top = 40.dp))
+                    CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 40.dp))
                 }, containerColor = MaterialTheme.colorScheme.surface)
 
             }

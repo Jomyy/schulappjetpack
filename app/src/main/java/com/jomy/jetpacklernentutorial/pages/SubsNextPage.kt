@@ -9,11 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jomy.jetpacklernentutorial.MainActivityViewModel
+import com.jomy.jetpacklernentutorial.R
 import com.jomy.jetpacklernentutorial.api.APIService
 import com.jomy.jetpacklernentutorial.components.SelectorDialog
 import com.jomy.jetpacklernentutorial.components.SubCard
@@ -39,9 +41,9 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
                 if(mainModel.selectedKlasse != ""){
-                    Text("Ausgewählte Klasse: ${mainModel.selectedKlasse}")
+                    Text(stringResource(id = R.string.selectedclass) + mainModel.selectedKlasse)
                 }else{
-                    Text("Klasse Auswählen")
+                    Text(stringResource(id = R.string.selectclass))
                 }
             }
         }
@@ -81,7 +83,7 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
                 if(!model.subsnext.isEmpty()){
                     if(mainModel.selectedKlasse == ""){
                         Column(modifier = Modifier.fillMaxHeight().fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                            Text("Bitte Wähle Eine Klasse Aus", style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+                            Text(stringResource(id = R.string.plsselectclass), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
                         }
                     }else{
                         LazyColumn(
