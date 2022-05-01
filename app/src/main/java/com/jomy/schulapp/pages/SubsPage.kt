@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jomy.jetpacklernentutorial.R
+import com.jomy.schulapp.R
 import com.jomy.schulapp.MainActivityViewModel
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.components.SelectorDialog

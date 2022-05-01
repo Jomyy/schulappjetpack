@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jomy.jetpacklernentutorial.R
+import com.jomy.schulapp.R
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
 
