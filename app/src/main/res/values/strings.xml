@@ -11,7 +11,7 @@
     <string name="lesson">Stunde:\n</string>
     <string name="lessontype">Fach:\n</string>
     <string name="selectedclass">Ausgewählte Klasse:&#160;</string>
-    <string name="empty">Huch... Solch Eine Lehre!</string>
+    <string name="empty">Huch... Solch Eine Leere!</string>
 
 
 </resources>
