@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -66,11 +65,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                         showSelector = !showSelector
 
                     },
-                    onNegativeClick = {
-                        showSelector = !showSelector
 
-
-                    },
                     onPositiveClick = { newklasse ->
                         mainModel.setKlasse(newKlasse = newklasse)
                         showSelector = !showSelector
@@ -80,7 +75,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                 )
             }
             if (model.errorMessage.isEmpty()) {
-                if (!model.subsnext.isEmpty()) {
+                if (model.subsnext.isNotEmpty()) {
                     if (mainModel.selectedKlasse == "") {
                         Column(
                             modifier = Modifier
@@ -176,7 +171,7 @@ class SubsNextPageViewModel : ViewModel() {
     private val _subsnext = mutableStateListOf<List<String>>()
     val subsnext: List<List<String>> get() = _subsnext
 
-    private val _klassenListe = mutableStateListOf<String>();
+    private val _klassenListe = mutableStateListOf<String>()
     val klassenListe: List<String> get() = _klassenListe
     var errorMessage: String by mutableStateOf("")
     fun loadSubsNext() {
@@ -187,8 +182,8 @@ class SubsNextPageViewModel : ViewModel() {
             try {
                 _subsnext.clear()
                 _subsnext.addAll(apiService.getSubsNext())
-                _klassenListe.clear();
-                var prevKlasse = "";
+                _klassenListe.clear()
+                var prevKlasse = ""
                 _subsnext.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
                         _klassenListe.add(stundelist[0])

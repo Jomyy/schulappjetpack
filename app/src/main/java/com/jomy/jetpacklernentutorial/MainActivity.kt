@@ -1,12 +1,8 @@
 package com.jomy.jetpacklernentutorial
 
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.os.Build
+
 import android.os.Bundle
-import android.view.Menu
-import android.view.ViewConfiguration
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -17,7 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,21 +32,21 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        val model: MainActivityViewModel by viewModels();
-        val foodModel: FoodPageViewModel by viewModels();
-        val subsModel: SubsPageViewModel by viewModels();
-        val subsNextModel: SubsNextPageViewModel by viewModels();
+        val model: MainActivityViewModel by viewModels()
+        val foodModel: FoodPageViewModel by viewModels()
+        val subsModel: SubsPageViewModel by viewModels()
+        val subsNextModel: SubsNextPageViewModel by viewModels()
 
         WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
 
             val navController = rememberNavController()
-            val foodSelected = rememberSaveable { mutableStateOf(true) };
-            val subsSelected = rememberSaveable { mutableStateOf(false) };
-            val subsNextSelected = rememberSaveable { mutableStateOf(false) };
+            val foodSelected = rememberSaveable { mutableStateOf(true) }
+            val subsSelected = rememberSaveable { mutableStateOf(false) }
+            val subsNextSelected = rememberSaveable { mutableStateOf(false) }
 
 
-            JetpacklernentutorialTheme() {
+            JetpacklernentutorialTheme {
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(80.dp)) {
                         NavigationBarItem(selected = foodSelected.value,
@@ -78,9 +73,9 @@ class MainActivity : ComponentActivity() {
                             selected = subsSelected.value,
                             onClick = {
                                 navController.navigate("subspage")
-                                foodSelected.value = false;
-                                subsSelected.value = true;
-                                subsNextSelected.value = false;
+                                foodSelected.value = false
+                                subsSelected.value = true
+                                subsNextSelected.value = false
                             },
                             label = {
                                 Text(
@@ -99,9 +94,9 @@ class MainActivity : ComponentActivity() {
                             selected = subsNextSelected.value,
                             onClick = {
                                 navController.navigate("subsnextpage")
-                                foodSelected.value = false;
-                                subsSelected.value = false;
-                                subsNextSelected.value = true;
+                                foodSelected.value = false
+                                subsSelected.value = false
+                                subsNextSelected.value = true
                             },
                             label = {
                                 Text(
@@ -122,21 +117,21 @@ class MainActivity : ComponentActivity() {
                         NavHost(navController = navController, startDestination = "foodpage") {
                             composable("foodpage") {
                                 FoodPage(foodModel)
-                                foodSelected.value = true;
-                                subsSelected.value = false;
-                                subsNextSelected.value = false;
+                                foodSelected.value = true
+                                subsSelected.value = false
+                                subsNextSelected.value = false
                             }
                             composable("subspage") {
                                 SubsPage(subsModel, model)
-                                foodSelected.value = false;
-                                subsSelected.value = true;
-                                subsNextSelected.value = false;
+                                foodSelected.value = false
+                                subsSelected.value = true
+                                subsNextSelected.value = false
                             }
                             composable("subsnextpage") {
                                 SubsNextPage(subsNextModel, model)
-                                foodSelected.value = false;
-                                subsSelected.value = false;
-                                subsNextSelected.value = true;
+                                foodSelected.value = false
+                                subsSelected.value = false
+                                subsNextSelected.value = true
                             }
 
                         }
@@ -161,12 +156,12 @@ class MainActivity : ComponentActivity() {
 }
 
 
-class MainActivityViewModel() : ViewModel() {
+class MainActivityViewModel : ViewModel() {
 
-    private val _selectedKlasse = mutableStateOf("");
-    val selectedKlasse: String get() = _selectedKlasse.value;
+    private val _selectedKlasse = mutableStateOf("")
+    val selectedKlasse: String get() = _selectedKlasse.value
     fun setKlasse(newKlasse: String) {
-        _selectedKlasse.value = newKlasse;
+        _selectedKlasse.value = newKlasse
     }
 }
 

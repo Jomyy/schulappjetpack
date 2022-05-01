@@ -68,11 +68,7 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                         showSelector = !showSelector
 
                     },
-                    onNegativeClick = {
-                        showSelector= !showSelector
 
-
-                    },
                     onPositiveClick = { newklasse ->
                         mainModel.setKlasse(newKlasse = newklasse)
                         showSelector = !showSelector
@@ -82,7 +78,7 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                 )
             }
             if (model.errorMessage.isEmpty()) {
-                if(!model.subs.isEmpty()){
+                if(model.subs.isNotEmpty()){
                     if(mainModel.selectedKlasse == ""){
                         Column(modifier = Modifier
                             .fillMaxHeight()
@@ -163,7 +159,7 @@ class SubsPageViewModel : ViewModel() {
     private val _subs = mutableStateListOf<List<String>>()
     val subs: List<List<String>> get() = _subs
 
-    private val _klassenListe = mutableStateListOf<String>();
+    private val _klassenListe = mutableStateListOf<String>()
     val klassenListe: List<String> get() = _klassenListe
     var errorMessage: String by mutableStateOf("")
     fun loadSubs() {
@@ -174,8 +170,8 @@ class SubsPageViewModel : ViewModel() {
             try {
                 _subs.clear()
                 _subs.addAll(apiService.getSubs())
-                _klassenListe.clear();
-                var prevKlasse = "";
+                _klassenListe.clear()
+                var prevKlasse = ""
                 _subs.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
                         _klassenListe.add(stundelist[0])

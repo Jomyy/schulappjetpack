@@ -20,10 +20,10 @@ fun JetpacklernentutorialTheme(
     content: @Composable () -> Unit
 ) {
 
-    val LightThemeColors = lightColorScheme(
+    val lightThemeColors = lightColorScheme(
 
     )
-    val DarkThemeColors = darkColorScheme(
+    val darkThemeColors = darkColorScheme(
 
     )
 
@@ -34,7 +34,7 @@ fun JetpacklernentutorialTheme(
         val context = LocalContext.current
         if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
-        if (darkTheme) DarkThemeColors else LightThemeColors
+        if (darkTheme) darkThemeColors else lightThemeColors
     }
     MaterialTheme(
         colorScheme = colors,

@@ -17,7 +17,7 @@ import com.jomy.jetpacklernentutorial.R
 @Composable
 fun SelectorDialog(
     onDismiss: () -> Unit,
-    onNegativeClick: () -> Unit,
+
     onPositiveClick: (newKlasse: String) -> Unit,
     klassen: List<String>
 ) {
