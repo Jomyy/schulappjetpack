@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.components
+package com.jomy.schulapp.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.jomy.jetpacklernentutorial.dataclasses.FoodDay
+import com.jomy.schulapp.dataclasses.FoodDay
 
 @Composable
 fun FoodCard(foodData: FoodDay) {

@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial
+package com.jomy.schulapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

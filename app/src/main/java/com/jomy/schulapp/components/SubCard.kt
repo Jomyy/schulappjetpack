@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.components
+package com.jomy.schulapp.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jomy.jetpacklernentutorial.R
-import com.jomy.jetpacklernentutorial.dataclasses.SubData
+
+import com.jomy.schulapp.dataclasses.SubData
 
 @Composable
 fun SubCard(subData: SubData) {

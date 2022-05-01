@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.components
+package com.jomy.schulapp.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.jomy.jetpacklernentutorial.R
+
 
 @Composable
 fun SelectorDialog(

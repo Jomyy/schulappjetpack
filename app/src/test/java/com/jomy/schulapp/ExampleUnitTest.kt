@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial
+package com.jomy.schulapp
 
 import org.junit.Test
 

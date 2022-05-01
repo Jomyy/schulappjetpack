@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.pages
+package com.jomy.schulapp.pages
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -13,12 +13,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jomy.jetpacklernentutorial.MainActivityViewModel
 import com.jomy.jetpacklernentutorial.R
-import com.jomy.jetpacklernentutorial.api.APIService
-import com.jomy.jetpacklernentutorial.components.SelectorDialog
-import com.jomy.jetpacklernentutorial.components.SubCard
-import com.jomy.jetpacklernentutorial.dataclasses.SubData
+import com.jomy.schulapp.MainActivityViewModel
+import com.jomy.schulapp.api.APIService
+import com.jomy.schulapp.components.SelectorDialog
+import com.jomy.schulapp.components.SubCard
+import com.jomy.schulapp.dataclasses.SubData
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

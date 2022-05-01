@@ -1,11 +1,11 @@
-package com.jomy.jetpacklernentutorial.pages
+package com.jomy.schulapp.pages
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import com.jomy.jetpacklernentutorial.components.*
+import com.jomy.schulapp.components.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,8 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jomy.jetpacklernentutorial.R
-import com.jomy.jetpacklernentutorial.api.APIService
-import com.jomy.jetpacklernentutorial.dataclasses.FoodDay
+
+import com.jomy.schulapp.api.APIService
+import com.jomy.schulapp.dataclasses.FoodDay
 import kotlinx.coroutines.launch
 
 @Composable

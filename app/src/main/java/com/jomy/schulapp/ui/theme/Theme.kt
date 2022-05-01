@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.ui.theme
+package com.jomy.schulapp.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial.dataclasses
+package com.jomy.schulapp.dataclasses
 
 data class FoodDay(
     val day: String,

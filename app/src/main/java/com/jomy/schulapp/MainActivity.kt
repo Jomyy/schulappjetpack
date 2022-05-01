@@ -1,4 +1,4 @@
-package com.jomy.jetpacklernentutorial
+package com.jomy.schulapp
 
 
 
@@ -21,8 +21,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jomy.jetpacklernentutorial.pages.*
-import com.jomy.jetpacklernentutorial.ui.theme.JetpacklernentutorialTheme
+import com.jomy.jetpacklernentutorial.R
+import com.jomy.schulapp.pages.*
+import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
 
 
 class MainActivity : ComponentActivity() {
