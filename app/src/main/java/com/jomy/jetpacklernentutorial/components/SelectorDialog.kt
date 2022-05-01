@@ -26,7 +26,7 @@ fun SelectorDialog(
     Dialog(onDismissRequest = onDismiss) {
 
         Surface(
-            tonalElevation = 10.dp,
+            color= MaterialTheme.colorScheme.secondaryContainer,
             shape = RoundedCornerShape(12.dp)
         ) {
 
@@ -69,7 +69,7 @@ fun SelectorDialog(
                         horizontalArrangement = Arrangement.End
                     ) {
                         Surface(
-                            color = MaterialTheme.colorScheme.primary, modifier = Modifier
+                            color = MaterialTheme.colorScheme.surfaceTint, modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
                         ) {

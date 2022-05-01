@@ -96,7 +96,13 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                                 end = 15.dp
                             )
                         ) {
-
+                            item {
+                                Divider(
+                                    modifier = Modifier
+                                        .padding(7.dp)
+                                        .height(0.dp)
+                                )
+                            }
                             items(model.subs) { sub ->
 
                                 if (sub[0] == mainModel.selectedKlasse) {

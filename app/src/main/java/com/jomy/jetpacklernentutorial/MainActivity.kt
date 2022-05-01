@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
 import android.view.ViewConfiguration
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
             val foodSelected = rememberSaveable { mutableStateOf(true) };
             val subsSelected = rememberSaveable { mutableStateOf(false) };
             val subsNextSelected = rememberSaveable { mutableStateOf(false) };
+
 
             JetpacklernentutorialTheme() {
                 Scaffold(bottomBar = {
@@ -112,7 +114,10 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }, topBar = {
-                    CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 0.dp))
+                    Surface(shadowElevation = 4.dp, tonalElevation = 4.dp) {
+                        CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 0.dp))
+                    }
+
                 }, containerColor = MaterialTheme.colorScheme.surface)
 
             }

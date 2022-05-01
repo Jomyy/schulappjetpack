@@ -33,7 +33,13 @@ fun FoodPage(model: FoodPageViewModel){
         if(model.errorMessage.isEmpty()){
 
             LazyColumn(modifier = Modifier.padding(top = 0.dp, bottom = 0.dp, start = 15.dp, end = 15.dp)){
-
+                item {
+                    Divider(
+                        modifier = Modifier
+                            .padding(7.dp)
+                            .height(0.dp)
+                    )
+                }
                 items(model.food){ foodDay ->
 
 
