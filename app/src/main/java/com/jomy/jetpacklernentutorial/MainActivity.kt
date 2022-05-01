@@ -44,19 +44,17 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
-            val foodSelected = remember { mutableStateOf(true) };
-            val subsSelected = remember { mutableStateOf(false) };
-            val subsNextSelected = remember { mutableStateOf(false) };
-            
+            val foodSelected = rememberSaveable { mutableStateOf(true) };
+            val subsSelected = rememberSaveable { mutableStateOf(false) };
+            val subsNextSelected = rememberSaveable { mutableStateOf(false) };
+
             JetpacklernentutorialTheme() {
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(95.dp)) {
                         NavigationBarItem(selected = foodSelected.value, onClick =
                         {
                             navController.navigate("foodpage")
-                            foodSelected.value = true;
-                            subsSelected.value = false;
-                            subsNextSelected.value = false;
+
                         }, label = { Text(stringResource(id = R.string.foodplan),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
                             Icon(
                                 Icons.Rounded.Fastfood, "Home"
@@ -90,9 +88,24 @@ class MainActivity : ComponentActivity() {
                 }, content = { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(navController = navController, startDestination = "foodpage") {
-                            composable("foodpage") { FoodPage(foodModel) }
-                            composable("subspage") { SubsPage(subsModel,model) }
-                            composable("subsnextpage") { SubsNextPage(subsNextModel,model) }
+                            composable("foodpage") {
+                                FoodPage(foodModel)
+                                foodSelected.value = true;
+                                subsSelected.value = false;
+                                subsNextSelected.value = false;
+                            }
+                            composable("subspage") {
+                                SubsPage(subsModel,model)
+                                foodSelected.value = false;
+                                subsSelected.value = true;
+                                subsNextSelected.value = false;
+                            }
+                            composable("subsnextpage") {
+                                SubsNextPage(subsNextModel,model)
+                                foodSelected.value = false;
+                                subsSelected.value = false;
+                                subsNextSelected.value = true;
+                            }
 
                         }
                     }
