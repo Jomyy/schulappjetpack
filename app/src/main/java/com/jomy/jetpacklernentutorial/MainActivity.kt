@@ -1,31 +1,32 @@
 package com.jomy.jetpacklernentutorial
 
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.view.ViewConfiguration
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jomy.jetpacklernentutorial.pages.*
 import com.jomy.jetpacklernentutorial.ui.theme.JetpacklernentutorialTheme
-
 
 
 class MainActivity : ComponentActivity() {
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
         val subsModel: SubsPageViewModel by viewModels();
         val subsNextModel: SubsNextPageViewModel by viewModels();
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
 
             val navController = rememberNavController()
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
             JetpacklernentutorialTheme() {
                 Scaffold(bottomBar = {
-                    NavigationBar(modifier = Modifier.height(95.dp)) {
+                    NavigationBar(modifier = Modifier.height(80.dp)) {
                         NavigationBarItem(selected = foodSelected.value, onClick =
                         {
                             navController.navigate("foodpage")
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             Icon(
                                 Icons.Rounded.Fastfood, "Home"
                             )
-                        }, modifier = Modifier.padding(bottom = 15.dp))
+                        }, modifier = Modifier.padding(bottom = 0.dp))
                         NavigationBarItem(selected = subsSelected.value, onClick = {
                             navController.navigate("subspage")
                             foodSelected.value = false;
@@ -69,7 +70,7 @@ class MainActivity : ComponentActivity() {
                             Icon(
                                 Icons.Rounded.Coronavirus, "Subs"
                             )
-                        } ,modifier = Modifier.padding(bottom = 15.dp))
+                        } ,modifier = Modifier.padding(bottom = 0.dp))
                         NavigationBarItem(
                             selected = subsNextSelected.value,
                             onClick = {
@@ -83,7 +84,7 @@ class MainActivity : ComponentActivity() {
                                 Icon(
                                     Icons.Rounded.Coronavirus, "substitutionsnextpage"
                                 )
-                            }, modifier = Modifier.padding(bottom = 15.dp))
+                            }, modifier = Modifier.padding(bottom = 0.dp))
                     }
                 }, content = { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
@@ -111,7 +112,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }, topBar = {
-                    CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 40.dp))
+                    CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 0.dp))
                 }, containerColor = MaterialTheme.colorScheme.surface)
 
             }
@@ -119,6 +120,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 class MainActivityViewModel(): ViewModel(){
 

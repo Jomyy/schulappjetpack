@@ -6,7 +6,9 @@ import androidx.compose.material3.*
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.graphics.ColorUtils
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -46,10 +48,16 @@ fun JetpacklernentutorialTheme(
         systemUiController.setStatusBarColor(
             color = colors.surface
         )
-
+        systemUiController.setNavigationBarColor(
+            color = Color(ColorUtils.blendARGB(colors.surface.toArgb(), colors.primary.toArgb(), 0.085f))
+        )
     }else{
         systemUiController.setStatusBarColor(
             color = colors.surface
+        )
+        systemUiController.setNavigationBarColor(
+            color = Color(ColorUtils.blendARGB(colors.surface.toArgb(), colors.primary.toArgb(), 0.085f))
+
         )
 
     }
