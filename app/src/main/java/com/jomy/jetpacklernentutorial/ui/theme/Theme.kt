@@ -1,5 +1,6 @@
 package com.jomy.jetpacklernentutorial.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 
@@ -9,22 +10,29 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
-
+fun supportsDynamic() : Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 @Composable
 fun JetpacklernentutorialTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val LightColorPalette = dynamicLightColorScheme(LocalContext.current)
-    val DarkColorPalette = dynamicDarkColorScheme(LocalContext.current)
+
+    val LightThemeColors = lightColorScheme(
+
+    )
+    val DarkThemeColors = darkColorScheme(
+
+    )
+
     val systemUiController = rememberSystemUiController()
 
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
 
+    val colors = if (supportsDynamic()) {
+        val context = LocalContext.current
+        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    } else {
+        if (darkTheme) DarkThemeColors else LightThemeColors
+    }
     MaterialTheme(
         colorScheme = colors,
         typography = Typography,
@@ -36,12 +44,12 @@ fun JetpacklernentutorialTheme(
 
     if(!isSystemInDarkTheme()){
         systemUiController.setStatusBarColor(
-            color = LightColorPalette.surface
+            color = colors.surface
         )
 
     }else{
         systemUiController.setStatusBarColor(
-            color = DarkColorPalette.surface
+            color = colors.surface
         )
 
     }

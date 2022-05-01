@@ -18,7 +18,7 @@ interface APIService {
         fun getInstance(): APIService {
             if (apiService == null) {
                 apiService = Retrofit.Builder()
-                    .baseUrl("http://schulapi.ddns.net/")
+                    .baseUrl("https://schulapi.ddns.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(APIService::class.java)
             }
