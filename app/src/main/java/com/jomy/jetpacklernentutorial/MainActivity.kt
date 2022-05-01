@@ -54,25 +54,47 @@ class MainActivity : ComponentActivity() {
             JetpacklernentutorialTheme() {
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(80.dp)) {
-                        NavigationBarItem(selected = foodSelected.value, onClick =
-                        {
-                            navController.navigate("foodpage")
+                        NavigationBarItem(selected = foodSelected.value,
+                            onClick =
+                            {
+                                navController.navigate("foodpage")
 
-                        }, label = { Text(stringResource(id = R.string.foodplan),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
-                            Icon(
-                                Icons.Rounded.Fastfood, "Home"
-                            )
-                        }, modifier = Modifier.padding(bottom = 0.dp))
-                        NavigationBarItem(selected = subsSelected.value, onClick = {
-                            navController.navigate("subspage")
-                            foodSelected.value = false;
-                            subsSelected.value = true;
-                            subsNextSelected.value = false;
-                        }, label = { Text(stringResource(id = R.string.substitutions),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)  }, icon = {
-                            Icon(
-                                Icons.Rounded.Coronavirus, "Subs"
-                            )
-                        } ,modifier = Modifier.padding(bottom = 0.dp))
+                            },
+                            label = {
+                                Text(
+                                    stringResource(id = R.string.foodplan),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    textAlign = TextAlign.Center
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    Icons.Rounded.Fastfood, "Home"
+                                )
+                            },
+                            modifier = Modifier.padding(bottom = 0.dp)
+                        )
+                        NavigationBarItem(
+                            selected = subsSelected.value,
+                            onClick = {
+                                navController.navigate("subspage")
+                                foodSelected.value = false;
+                                subsSelected.value = true;
+                                subsNextSelected.value = false;
+                            },
+                            label = {
+                                Text(
+                                    stringResource(id = R.string.substitutions),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    textAlign = TextAlign.Center
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    Icons.Rounded.Coronavirus, "Subs"
+                                )
+                            },
+                            modifier = Modifier.padding(bottom = 0.dp))
                         NavigationBarItem(
                             selected = subsNextSelected.value,
                             onClick = {
@@ -81,12 +103,19 @@ class MainActivity : ComponentActivity() {
                                 subsSelected.value = false;
                                 subsNextSelected.value = true;
                             },
-                            label = { Text(stringResource(id = R.string.substitutionsnext),style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) },
+                            label = {
+                                Text(
+                                    stringResource(id = R.string.substitutionsnext),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    textAlign = TextAlign.Center
+                                )
+                            },
                             icon = {
                                 Icon(
                                     Icons.Rounded.Coronavirus, "substitutionsnextpage"
                                 )
-                            }, modifier = Modifier.padding(bottom = 0.dp))
+                            }, modifier = Modifier.padding(bottom = 0.dp)
+                        )
                     }
                 }, content = { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
@@ -98,13 +127,13 @@ class MainActivity : ComponentActivity() {
                                 subsNextSelected.value = false;
                             }
                             composable("subspage") {
-                                SubsPage(subsModel,model)
+                                SubsPage(subsModel, model)
                                 foodSelected.value = false;
                                 subsSelected.value = true;
                                 subsNextSelected.value = false;
                             }
                             composable("subsnextpage") {
-                                SubsNextPage(subsNextModel,model)
+                                SubsNextPage(subsNextModel, model)
                                 foodSelected.value = false;
                                 subsSelected.value = false;
                                 subsNextSelected.value = true;
@@ -115,7 +144,12 @@ class MainActivity : ComponentActivity() {
 
                 }, topBar = {
                     Surface(shadowElevation = 4.dp, tonalElevation = 4.dp) {
-                        CenterAlignedTopAppBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(canScroll = {true}),title = {Text(stringResource(id = R.string.app_name))},modifier = Modifier.padding(top = 0.dp))
+                        CenterAlignedTopAppBar(
+                            scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(
+                                canScroll = { true }),
+                            title = { Text(stringResource(id = R.string.app_name)) },
+                            modifier = Modifier.padding(top = 0.dp)
+                        )
                     }
 
                 }, containerColor = MaterialTheme.colorScheme.surface)
@@ -127,11 +161,11 @@ class MainActivity : ComponentActivity() {
 }
 
 
-class MainActivityViewModel(): ViewModel(){
+class MainActivityViewModel() : ViewModel() {
 
     private val _selectedKlasse = mutableStateOf("");
     val selectedKlasse: String get() = _selectedKlasse.value;
-    fun setKlasse(newKlasse: String){
+    fun setKlasse(newKlasse: String) {
         _selectedKlasse.value = newKlasse;
     }
 }

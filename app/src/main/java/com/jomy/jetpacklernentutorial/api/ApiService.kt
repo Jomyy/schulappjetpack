@@ -8,8 +8,10 @@ import retrofit2.http.GET
 interface APIService {
     @GET("foodplan")
     suspend fun getFood(): List<List<String>>
+
     @GET("substitutions")
     suspend fun getSubs(): List<List<String>>
+
     @GET("substitutionsnext")
     suspend fun getSubsNext(): List<List<String>>
 

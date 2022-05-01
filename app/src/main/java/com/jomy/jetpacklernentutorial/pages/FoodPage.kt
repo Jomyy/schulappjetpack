@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jomy.jetpacklernentutorial.R
 import com.jomy.jetpacklernentutorial.api.APIService
 import com.jomy.jetpacklernentutorial.dataclasses.FoodDay
 
@@ -23,52 +25,66 @@ import com.jomy.jetpacklernentutorial.dataclasses.FoodDay
 import kotlinx.coroutines.launch
 
 @Composable
-fun FoodPage(model: FoodPageViewModel){
+fun FoodPage(model: FoodPageViewModel) {
 
 
     LaunchedEffect(Unit, block = {
         model.loadFood()
     })
 
-        if(model.errorMessage.isEmpty()){
+    if (model.errorMessage.isEmpty()) {
 
-            LazyColumn(modifier = Modifier.padding(top = 0.dp, bottom = 0.dp, start = 15.dp, end = 15.dp)){
-                item {
-                    Divider(
-                        modifier = Modifier
-                            .padding(7.dp)
-                            .height(0.dp)
-                    )
-                }
-                items(model.food){ foodDay ->
-
-
-                    FoodCard(foodData = FoodDay(foodDay[0],foodDay[1],foodDay[2],foodDay[3]))
-                    Divider(modifier = Modifier
+        LazyColumn(
+            modifier = Modifier.padding(
+                top = 0.dp,
+                bottom = 0.dp,
+                start = 15.dp,
+                end = 15.dp
+            )
+        ) {
+            item {
+                Divider(
+                    modifier = Modifier
                         .padding(7.dp)
-                        .height(0.dp))
-                }
+                        .height(0.dp)
+                )
             }
-            if(model.food.isEmpty()){
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()) {
-                    CircularProgressIndicator()
-                }
+            items(model.food) { foodDay ->
 
+
+                FoodCard(foodData = FoodDay(foodDay[0], foodDay[1], foodDay[2], foodDay[3]))
+                Divider(
+                    modifier = Modifier
+                        .padding(7.dp)
+                        .height(0.dp)
+                )
             }
-        }else{
-            Text(model.errorMessage)
         }
+        if (model.food.isEmpty()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            ) {
+                CircularProgressIndicator()
+            }
+
+        }
+    } else {
+        Text(stringResource(id = R.string.serverNotOn))
+    }
 
 
 }
-class FoodPageViewModel: ViewModel(){
+
+class FoodPageViewModel : ViewModel() {
     private val _food = mutableStateListOf<List<String>>()
-    val food : List<List<String>> get() = _food
+    val food: List<List<String>> get() = _food
 
     var errorMessage: String by mutableStateOf("")
-    fun loadFood(){
+    fun loadFood() {
 
         viewModelScope.launch {
 

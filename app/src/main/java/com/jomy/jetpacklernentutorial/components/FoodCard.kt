@@ -17,42 +17,66 @@ import androidx.compose.ui.unit.dp
 import com.jomy.jetpacklernentutorial.dataclasses.FoodDay
 
 @Composable
-fun FoodCard(foodData: FoodDay){
+fun FoodCard(foodData: FoodDay) {
 
 
-    Surface(shadowElevation = 0.dp, shape = MaterialTheme.shapes.large, tonalElevation = 4.dp, modifier = Modifier
-        .border(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.outline,
-            shape = MaterialTheme.shapes.large
-        )
-        .fillMaxWidth()) {
-        Column(modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Surface(
+        shadowElevation = 0.dp,
+        shape = MaterialTheme.shapes.large,
+        tonalElevation = 4.dp,
+        modifier = Modifier
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.large
+            )
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(foodData.day, style = MaterialTheme.typography.titleLarge)
-            Divider(modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp)
-                .height(0.5.dp)
-                .fillMaxWidth(.5f))
-            Text(foodData.firstMeal, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
-            Divider(modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp)
-                .height(0.5.dp)
-                .fillMaxWidth(.5f))
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.5.dp)
+                    .fillMaxWidth(.5f)
+            )
+            Text(
+                foodData.firstMeal,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.5.dp)
+                    .fillMaxWidth(.5f)
+            )
 
-            Text(foodData.secondMeal, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
-            Divider(modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp)
-                .height(0.5.dp)
-                .fillMaxWidth(.5f))
+            Text(
+                foodData.secondMeal,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.5.dp)
+                    .fillMaxWidth(.5f)
+            )
 
-            Text(foodData.thirdMeal, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            Text(
+                foodData.thirdMeal,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall
+            )
 
 
         }
 
     }
-
-
 
 
 }

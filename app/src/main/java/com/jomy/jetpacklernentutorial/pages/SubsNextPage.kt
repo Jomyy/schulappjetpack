@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) {
+fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
 
     Scaffold(bottomBar = {
@@ -40,9 +40,9 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
                     .fillMaxWidth(.9f)
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
-                if(mainModel.selectedKlasse != ""){
+                if (mainModel.selectedKlasse != "") {
                     Text(stringResource(id = R.string.selectedclass) + mainModel.selectedKlasse)
-                }else{
+                } else {
                     Text(stringResource(id = R.string.selectclass))
                 }
             }
@@ -67,7 +67,7 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
 
                     },
                     onNegativeClick = {
-                        showSelector= !showSelector
+                        showSelector = !showSelector
 
 
                     },
@@ -80,12 +80,22 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
                 )
             }
             if (model.errorMessage.isEmpty()) {
-                if(!model.subsnext.isEmpty()){
-                    if(mainModel.selectedKlasse == ""){
-                        Column(modifier = Modifier.fillMaxHeight().fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                            Text(stringResource(id = R.string.plsselectclass), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+                if (!model.subsnext.isEmpty()) {
+                    if (mainModel.selectedKlasse == "") {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                stringResource(id = R.string.plsselectclass),
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center
+                            )
                         }
-                    }else{
+                    } else {
                         LazyColumn(
                             modifier = Modifier.padding(
                                 top = 0.dp,
@@ -134,15 +144,25 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
                         }
                     }
 
-                }else{
-                    Column(modifier = Modifier.fillMaxHeight().fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text("Es Gibt Aktuell Keine Vertretungen", style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            stringResource(id = R.string.noSubs),
+                            style = MaterialTheme.typography.titleMedium,
+                            textAlign = TextAlign.Center
+                        )
                     }
                 }
 
 
             } else {
-                Text(model.errorMessage)
+                Text(stringResource(id = R.string.serverNotOn))
             }
 
         }
@@ -150,7 +170,6 @@ fun SubsNextPage(model: SubsNextPageViewModel,mainModel: MainActivityViewModel) 
 
     }
 }
-
 
 
 class SubsNextPageViewModel : ViewModel() {

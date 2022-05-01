@@ -84,7 +84,9 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
             if (model.errorMessage.isEmpty()) {
                 if(!model.subs.isEmpty()){
                     if(mainModel.selectedKlasse == ""){
-                        Column(modifier = Modifier.fillMaxHeight().fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                        Column(modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                             Text(stringResource(id = R.string.plsselectclass), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
                         }
                     }else{
@@ -137,14 +139,16 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                     }
 
                 }else{
-                    Column(modifier = Modifier.fillMaxHeight().fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text("Es Gibt Aktuell Keine Vertretungen", style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                        Text(stringResource(id = R.string.noSubs), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
                     }
                 }
 
 
             } else {
-                Text(model.errorMessage)
+                Text(stringResource(id = R.string.serverNotOn))
             }
 
         }

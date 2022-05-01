@@ -26,7 +26,7 @@ fun SelectorDialog(
     Dialog(onDismissRequest = onDismiss) {
 
         Surface(
-            color= MaterialTheme.colorScheme.secondaryContainer,
+            color = MaterialTheme.colorScheme.secondaryContainer,
             shape = RoundedCornerShape(12.dp)
         ) {
 
@@ -35,12 +35,17 @@ fun SelectorDialog(
                 // Color Selection
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(stringResource(id = R.string.selectclass), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 10.dp))
-                    if(klassen.isEmpty()){
+                    Text(
+                        stringResource(id = R.string.selectclass),
+                        style = MaterialTheme.typography.headlineSmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 10.dp)
+                    )
+                    if (klassen.isEmpty()) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(stringResource(id = R.string.empty))
                         }
-                    }else {
+                    } else {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -54,7 +59,7 @@ fun SelectorDialog(
                                     Text(klassetext)
                                 }
                             }
-                            item{
+                            item {
                                 Divider(
                                     modifier = Modifier
                                         .padding(4.dp)
@@ -73,7 +78,7 @@ fun SelectorDialog(
                                 .fillMaxWidth()
                                 .height(60.dp)
                         ) {
-                            TextButton(onClick = { onPositiveClick("") },) {
+                            TextButton(onClick = { onPositiveClick("") }) {
                                 Text(
                                     stringResource(id = R.string.cancel),
                                     textAlign = TextAlign.End,
@@ -84,10 +89,6 @@ fun SelectorDialog(
 
                     }
                 }
-
-
-
-
 
 
             }

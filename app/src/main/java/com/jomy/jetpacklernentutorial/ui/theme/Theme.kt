@@ -12,7 +12,8 @@ import androidx.core.graphics.ColorUtils
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
-fun supportsDynamic() : Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
 @Composable
 fun JetpacklernentutorialTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -44,19 +45,43 @@ fun JetpacklernentutorialTheme(
 
 
 
-    if(!isSystemInDarkTheme()){
+    if (!isSystemInDarkTheme()) {
         systemUiController.setStatusBarColor(
-            color = colors.surface
+            color = Color(
+                ColorUtils.blendARGB(
+                    colors.surface.toArgb(),
+                    colors.primary.toArgb(),
+                    0.09f
+                )
+            )
         )
         systemUiController.setNavigationBarColor(
-            color = Color(ColorUtils.blendARGB(colors.surface.toArgb(), colors.primary.toArgb(), 0.085f))
+            color = Color(
+                ColorUtils.blendARGB(
+                    colors.surface.toArgb(),
+                    colors.primary.toArgb(),
+                    0.085f
+                )
+            )
         )
-    }else{
+    } else {
         systemUiController.setStatusBarColor(
-            color = colors.surface
+            color = Color(
+                ColorUtils.blendARGB(
+                    colors.surface.toArgb(),
+                    colors.primary.toArgb(),
+                    0.09f
+                )
+            )
         )
         systemUiController.setNavigationBarColor(
-            color = Color(ColorUtils.blendARGB(colors.surface.toArgb(), colors.primary.toArgb(), 0.085f))
+            color = Color(
+                ColorUtils.blendARGB(
+                    colors.surface.toArgb(),
+                    colors.primary.toArgb(),
+                    0.085f
+                )
+            )
 
         )
 
