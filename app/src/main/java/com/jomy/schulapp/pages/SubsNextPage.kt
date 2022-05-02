@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,18 +15,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
 import com.jomy.schulapp.MainActivityViewModel
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.components.SubCard
 import com.jomy.schulapp.dataclasses.SubData
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
+    val isRefreshing by model.isRefreshing.collectAsState()
+
 
     Scaffold(bottomBar = {
         Column(
@@ -52,6 +62,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
         LaunchedEffect(Unit, block = {
             model.loadSubsNext()
         })
+
         Column(
 
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,16 +82,106 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                         showSelector = !showSelector
 
                     },
-                    klassen = model.klassenListe
+                    klassen = model.klassenListe,
+                    oldSelection = mainModel.selectedKlasse
+
                 )
             }
-            if (model.errorMessage.isEmpty()) {
-                if (model.subsnext.isNotEmpty()) {
-                    if (mainModel.selectedKlasse == "") {
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing),
+                onRefresh = { model.refresh() },
+            ) {
+
+                if (model.errorMessage.isEmpty()) {
+                    if (model.subsnext.isNotEmpty()) {
+                        if (mainModel.selectedKlasse == "") {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                                    .verticalScroll(rememberScrollState()),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    stringResource(id = R.string.plsselectclass),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        } else {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .padding(
+                                        top = 0.dp,
+                                        bottom = 0.dp,
+                                        start = 15.dp,
+                                        end = 15.dp
+                                    )
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                            ) {
+                                item {
+                                    Divider(
+                                        modifier = Modifier
+                                            .padding(7.dp)
+                                            .height(0.dp)
+                                    )
+                                }
+                                items(model.subsnext) { sub ->
+
+                                    if (sub[0] == mainModel.selectedKlasse) {
+                                        SubCard(
+                                            subData = SubData(
+                                                sub[0],
+                                                sub[1],
+                                                sub[2],
+                                                sub[3],
+                                                sub[4],
+                                                sub[5],
+                                                sub[6]
+                                            )
+                                        )
+                                        Divider(
+                                            modifier = Modifier
+                                                .padding(7.dp)
+                                                .height(0.dp)
+                                        )
+                                    }
+
+                                }
+                                item {
+                                    Divider(
+                                        modifier = Modifier
+                                            .padding(26.dp)
+                                            .height(0.dp)
+                                    )
+                                }
+
+                            }
+                        }
+
+                    } else if (!model.isRefreshing.collectAsState().value) {
                         Column(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState()),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                stringResource(id = R.string.noSubs),
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState()),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
@@ -90,79 +191,25 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                                 textAlign = TextAlign.Center
                             )
                         }
-                    } else {
-                        LazyColumn(
-                            modifier = Modifier.padding(
-                                top = 0.dp,
-                                bottom = 0.dp,
-                                start = 15.dp,
-                                end = 15.dp
-                            )
-                        ) {
-                            item {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(7.dp)
-                                        .height(0.dp)
-                                )
-                            }
-                            items(model.subsnext) { sub ->
-
-                                if (sub[0] == mainModel.selectedKlasse) {
-                                    SubCard(
-                                        subData = SubData(
-                                            sub[0],
-                                            sub[1],
-                                            sub[2],
-                                            sub[3],
-                                            sub[4],
-                                            sub[5],
-                                            sub[6]
-                                        )
-                                    )
-                                    Divider(
-                                        modifier = Modifier
-                                            .padding(7.dp)
-                                            .height(0.dp)
-                                    )
-                                }
-
-                            }
-                            item {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(26.dp)
-                                        .height(0.dp)
-                                )
-                            }
-
-                        }
                     }
+
 
                 } else {
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                     ) {
-                        Text(
-                            stringResource(id = R.string.noSubs),
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Center
-                        )
+                        Text(stringResource(id = R.string.serverNotOn))
                     }
+
                 }
 
-
-            } else {
-                Text(stringResource(id = R.string.serverNotOn))
             }
 
+
         }
-
-
     }
 }
 
@@ -172,6 +219,10 @@ class SubsNextPageViewModel : ViewModel() {
     val subsnext: List<List<String>> get() = _subsnext
 
     private val _klassenListe = mutableStateListOf<String>()
+    private val _isRefreshing = MutableStateFlow(false)
+
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
     val klassenListe: List<String> get() = _klassenListe
     var errorMessage: String by mutableStateOf("")
     fun loadSubsNext() {
@@ -197,5 +248,28 @@ class SubsNextPageViewModel : ViewModel() {
         }
         Log.d("ERRORFETCH", errorMessage)
 
+    }
+
+    fun refresh() {
+        _isRefreshing.value = true;
+        viewModelScope.launch {
+            delay(250)
+            val apiService = APIService.getInstance()
+            try {
+                _subsnext.clear()
+                _subsnext.addAll(apiService.getSubsNext())
+                _klassenListe.clear()
+                var prevKlasse = ""
+                _subsnext.forEach { stundelist ->
+                    if (stundelist[0] != prevKlasse) {
+                        _klassenListe.add(stundelist[0])
+                    }
+                    prevKlasse = stundelist[0]
+                }
+            } catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+            _isRefreshing.value = false;
+        }
     }
 }

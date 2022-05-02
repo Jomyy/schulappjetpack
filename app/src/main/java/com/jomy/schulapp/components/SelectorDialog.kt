@@ -20,7 +20,8 @@ fun SelectorDialog(
     onDismiss: () -> Unit,
 
     onPositiveClick: (newKlasse: String) -> Unit,
-    klassen: List<String>
+    klassen: List<String>,
+    oldSelection: String
 ) {
 
 
@@ -79,7 +80,7 @@ fun SelectorDialog(
                                 .fillMaxWidth()
                                 .height(60.dp)
                         ) {
-                            TextButton(onClick = { onPositiveClick("") }) {
+                            TextButton(onClick = { onPositiveClick(oldSelection) }) {
                                 Text(
                                     stringResource(id = R.string.cancel),
                                     textAlign = TextAlign.End,

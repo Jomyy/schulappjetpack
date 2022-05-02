@@ -1,7 +1,6 @@
 package com.jomy.schulapp
 
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,7 +20,6 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jomy.schulapp.R
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
 
@@ -50,7 +48,8 @@ class MainActivity : ComponentActivity() {
             JetpacklernentutorialTheme {
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(80.dp)) {
-                        NavigationBarItem(selected = foodSelected.value,
+                        NavigationBarItem(
+                            selected = foodSelected.value,
                             onClick =
                             {
                                 navController.navigate("foodpage")
@@ -90,7 +89,8 @@ class MainActivity : ComponentActivity() {
                                     Icons.Rounded.Coronavirus, "Subs"
                                 )
                             },
-                            modifier = Modifier.padding(bottom = 0.dp))
+                            modifier = Modifier.padding(bottom = 0.dp)
+                        )
                         NavigationBarItem(
                             selected = subsNextSelected.value,
                             onClick = {

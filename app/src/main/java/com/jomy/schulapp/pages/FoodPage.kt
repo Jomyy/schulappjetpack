@@ -3,6 +3,8 @@ package com.jomy.schulapp.pages
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import com.jomy.schulapp.components.*
@@ -14,62 +16,85 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
 
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.dataclasses.FoodDay
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @Composable
 fun FoodPage(model: FoodPageViewModel) {
-
-
     LaunchedEffect(Unit, block = {
         model.loadFood()
     })
+    val isRefreshing by model.isRefreshing.collectAsState()
 
-    if (model.errorMessage.isEmpty()) {
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing),
+        onRefresh = { model.refresh() },
+    ) {
+        if (model.errorMessage.isEmpty()) {
 
-        LazyColumn(
-            modifier = Modifier.padding(
-                top = 0.dp,
-                bottom = 0.dp,
-                start = 15.dp,
-                end = 15.dp
-            )
-        ) {
-            item {
-                Divider(
-                    modifier = Modifier
-                        .padding(7.dp)
-                        .height(0.dp)
-                )
+            LazyColumn(
+                modifier = Modifier
+                    .padding(
+                        top = 0.dp,
+                        bottom = 0.dp,
+                        start = 15.dp,
+                        end = 15.dp
+                    )
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+            ) {
+                item {
+                    Divider(
+                        modifier = Modifier
+                            .padding(7.dp)
+                            .height(0.dp)
+                    )
+                }
+                items(model.food) { foodDay ->
+
+
+                    FoodCard(foodData = FoodDay(foodDay[0], foodDay[1], foodDay[2], foodDay[3]))
+                    Divider(
+                        modifier = Modifier
+                            .padding(7.dp)
+                            .height(0.dp)
+                    )
+                }
             }
-            items(model.food) { foodDay ->
-
-
-                FoodCard(foodData = FoodDay(foodDay[0], foodDay[1], foodDay[2], foodDay[3]))
-                Divider(
+            if (model.food.isEmpty()) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(7.dp)
-                        .height(0.dp)
-                )
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                ) {
+                    CircularProgressIndicator()
+                }
+
             }
-        }
-        if (model.food.isEmpty()) {
+        } else {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
+                    .verticalScroll(
+                        rememberScrollState()
+                    )
             ) {
-                CircularProgressIndicator()
-            }
+                Text(stringResource(id = R.string.serverNotOn))
 
+            }
         }
-    } else {
-        Text(stringResource(id = R.string.serverNotOn))
     }
 
 
@@ -78,6 +103,10 @@ fun FoodPage(model: FoodPageViewModel) {
 class FoodPageViewModel : ViewModel() {
     private val _food = mutableStateListOf<List<String>>()
     val food: List<List<String>> get() = _food
+    private val _isRefreshing = MutableStateFlow(false)
+
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
 
     var errorMessage: String by mutableStateOf("")
     fun loadFood() {
@@ -86,6 +115,7 @@ class FoodPageViewModel : ViewModel() {
 
             val apiService = APIService.getInstance()
             try {
+
                 _food.clear()
                 _food.addAll(apiService.getFood())
 
@@ -95,6 +125,23 @@ class FoodPageViewModel : ViewModel() {
 
         }
 
+
+    }
+
+    fun refresh() {
+        _isRefreshing.value = true;
+        viewModelScope.launch {
+            delay(250)
+            val apiService = APIService.getInstance()
+            try {
+                _food.clear()
+                _food.addAll(apiService.getFood())
+
+            } catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+            _isRefreshing.value = false;
+        }
 
     }
 }
