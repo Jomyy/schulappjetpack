@@ -159,20 +159,7 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                         Text(stringResource(id = R.string.noSubs), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
                     }
                 } else {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .verticalScroll(rememberScrollState()),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            stringResource(id = R.string.plsselectclass),
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+
                 }
 
 

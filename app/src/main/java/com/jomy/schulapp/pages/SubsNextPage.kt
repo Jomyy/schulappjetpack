@@ -177,20 +177,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                             )
                         }
                     } else {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .fillMaxWidth()
-                                .verticalScroll(rememberScrollState()),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                stringResource(id = R.string.plsselectclass),
-                                style = MaterialTheme.typography.titleMedium,
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        
                     }
 
 
