@@ -1,48 +1,83 @@
 package com.jomy.schulapp
 
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.Coronavirus
+import androidx.compose.material.icons.rounded.Fastfood
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
+import com.jomy.schulapp.util.SettingsUtil
+import com.jomy.schulapp.util.WorkerUtil
 
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : ComponentActivity() {
 
+
+    @SuppressLint("FlowOperatorInvokedInComposition")
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        val extras = intent.extras
+        var notornot = "foodpage"
+
+
 
         val model: MainActivityViewModel by viewModels()
         val foodModel: FoodPageViewModel by viewModels()
         val subsModel: SubsPageViewModel by viewModels()
         val subsNextModel: SubsNextPageViewModel by viewModels()
-
+        model.setKlasse(SettingsUtil.readSetting("selected_class", context = applicationContext),context = applicationContext)
+        if (extras != null) {
+            if(extras.getString("note") != null){
+                notornot = extras.getString("note")!!
+            }
+            if(extras.getString("klasse") != null){
+                model.setKlasse(extras.getString("klasse")!!, context = applicationContext);
+            }
+        }
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        setContent {
 
+
+        setContent {
+            val context = LocalContext.current
             val navController = rememberNavController()
             val foodSelected = rememberSaveable { mutableStateOf(true) }
             val subsSelected = rememberSaveable { mutableStateOf(false) }
             val subsNextSelected = rememberSaveable { mutableStateOf(false) }
+
+            WorkerUtil.addWorker(context)
+
 
 
             JetpacklernentutorialTheme {
@@ -114,8 +149,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }, content = { innerPadding ->
+
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        NavHost(navController = navController, startDestination = "foodpage") {
+                        NavHost(navController = navController, startDestination = notornot) {
                             composable("foodpage") {
                                 FoodPage(foodModel)
                                 foodSelected.value = true
@@ -144,7 +180,14 @@ class MainActivity : ComponentActivity() {
                             scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(
                                 canScroll = { true }),
                             title = { Text(stringResource(id = R.string.app_name)) },
-                            modifier = Modifier.padding(top = 0.dp)
+                            modifier = Modifier.padding(top = 0.dp),
+                            actions = {
+                                IconButton(onClick = {
+                                    context.startActivity(Intent(context, SettingsActivity::class.java))
+                                }) {
+                                    Icon(Icons.Rounded.Settings,"settings")
+                                }
+                            }
                         )
                     }
 
@@ -154,6 +197,7 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
 }
 
 
@@ -161,9 +205,12 @@ class MainActivityViewModel : ViewModel() {
 
     private val _selectedKlasse = mutableStateOf("")
     val selectedKlasse: String get() = _selectedKlasse.value
-    fun setKlasse(newKlasse: String) {
+    fun setKlasse(newKlasse: String,context: Context) {
         _selectedKlasse.value = newKlasse
+        SettingsUtil.writeSetting("selected_class",newKlasse,context)
+
     }
+
 }
 
 

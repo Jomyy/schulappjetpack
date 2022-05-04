@@ -14,6 +14,8 @@ interface APIService {
 
     @GET("substitutionsnext")
     suspend fun getSubsNext(): List<List<String>>
+    @GET("allclasses")
+    suspend fun getAllClasses(): List<String>
 
     companion object {
         private var apiService: APIService? = null

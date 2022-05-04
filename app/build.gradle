@@ -55,8 +55,9 @@ android {
 }
 
 dependencies {
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     def nav_version = "2.4.2"
-
+    implementation 'com.github.alorma:compose-settings-ui:0.7.2'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -68,6 +69,17 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.3.1'
+    implementation("com.github.Sh4dowSoul.ComposePreferences:preferences-material3:0.1.4")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
+    // optional - RxJava2 support
+    implementation("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+    implementation "com.github.JamalMulla:ComposePrefs:1.0.0" // Current is 1.0.0
+
+    // optional - RxJava3 support
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
+    // Optional - Easy access to preferences from modules without compose dependency
+    implementation("com.github.Sh4dowSoul.ComposePreferences:datastore-manager:0.1.4")
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-pager:0.23.0" // Pager
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.0"

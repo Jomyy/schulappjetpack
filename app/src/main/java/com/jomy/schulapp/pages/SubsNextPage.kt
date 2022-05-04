@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
-
+    val context = LocalContext.current;
 
     Scaffold(bottomBar = {
         Column(
@@ -78,7 +79,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                     },
 
                     onPositiveClick = { newklasse ->
-                        mainModel.setKlasse(newKlasse = newklasse)
+                        mainModel.setKlasse(newKlasse = newklasse, context = context)
                         showSelector = !showSelector
 
                     },
@@ -177,7 +178,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                             )
                         }
                     } else {
-                        
+
                     }
 
 
@@ -211,6 +212,7 @@ class SubsNextPageViewModel : ViewModel() {
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
     val klassenListe: List<String> get() = _klassenListe
+
     var errorMessage: String by mutableStateOf("")
     fun loadSubsNext() {
 
