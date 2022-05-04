@@ -131,7 +131,7 @@ class FoodPageViewModel : ViewModel() {
     fun refresh() {
         _isRefreshing.value = true;
         viewModelScope.launch {
-            delay(250)
+            delay(300)
             val apiService = APIService.getInstance()
             try {
                 _food.clear()

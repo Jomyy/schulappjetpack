@@ -80,8 +80,17 @@ fun SubCard(subData: SubData) {
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall
             )
-
-
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.5.dp)
+                    .fillMaxWidth(.5f)
+            )
+            Text(
+                stringResource(id = R.string.room) + subData.raum,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
 
     }

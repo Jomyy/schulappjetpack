@@ -29,7 +29,9 @@ fun SelectorDialog(
 
 
     Dialog(onDismissRequest = onDismiss) {
-        Scaffold(modifier = Modifier.padding(vertical = 40.dp).clip(MaterialTheme.shapes.large),containerColor = MaterialTheme.colorScheme.secondaryContainer,content = {
+        Scaffold(modifier = Modifier
+            .padding(vertical = 40.dp)
+            .clip(MaterialTheme.shapes.large),containerColor = MaterialTheme.colorScheme.secondaryContainer,content = {
             Surface(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(12.dp),
@@ -87,7 +89,8 @@ fun SelectorDialog(
         }, bottomBar = {
             Surface(
                 color = MaterialTheme.colorScheme.surfaceTint, modifier = Modifier
-                    .fillMaxWidth().padding()
+                    .fillMaxWidth()
+                    .padding()
 
 
             ) {

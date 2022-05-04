@@ -75,13 +75,18 @@ fun PreferencesSwitch(scale: Float = 1f,
             else
                 with(LocalDensity.current) { (thumbRadius + gapBetweenThumbAndTrackEdge).toPx() }
         )
-        Row(modifier = Modifier.height(65.dp).clickable {
-            switchON.value = !switchON.value
+        Row(modifier = Modifier
+            .height(65.dp)
+            .clickable {
+                switchON.value = !switchON.value
 
-            SettingsUtil.writeSetting(key,switchON.value.toString(), context = context )
-            onChange(switchON.value)
-        }.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically){
-            Icon(icon,title,modifier = Modifier.padding(end = 20.dp).size(30.dp))
+                SettingsUtil.writeSetting(key, switchON.value.toString(), context = context)
+                onChange(switchON.value)
+            }
+            .padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically){
+            Icon(icon,title,modifier = Modifier
+                .padding(end = 20.dp)
+                .size(30.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(title, style = TextStyle(
                     fontSize = 20.sp

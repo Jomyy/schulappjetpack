@@ -75,7 +75,9 @@ class SettingsActivity : ComponentActivity() {
 
             var isNoteEnabled by remember {
 
-                mutableStateOf(SettingsUtil.readSetting("notifications_enabled", context = context).toBoolean())
+                mutableStateOf(
+                    SettingsUtil.readSetting("notifications_enabled", context = context).toBoolean()
+                )
             }
 
             JetpacklernentutorialTheme {
@@ -111,7 +113,8 @@ class SettingsActivity : ComponentActivity() {
                             Modifier
                                 .padding(vertical = 8.5.dp)
                                 .padding(horizontal = 0.dp)
-                                .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface)
+                                .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface
+                        )
                         PreferencesListSelector(list = model.allClasses, key = "notification_class",
                             "Klasse Auswählen", isNoteEnabled, {
                                 WorkerUtil.addWorker(context)
@@ -121,7 +124,8 @@ class SettingsActivity : ComponentActivity() {
                             Modifier
                                 .padding(vertical = 8.dp)
                                 .padding(horizontal = 0.dp)
-                                .height(1.dp), color = MaterialTheme.colorScheme.inverseOnSurface)
+                                .height(1.dp), color = MaterialTheme.colorScheme.inverseOnSurface
+                        )
                     }
                 }
             }
@@ -153,14 +157,13 @@ class SettingsActivityViewModel : ViewModel() {
 
     private val _selectedNotKlasse = mutableStateOf("")
     val selectedNotKlasse: String get() = _selectedNotKlasse.value
-    fun setNotKlasse(newKlasse: String,context: Context) {
+    fun setNotKlasse(newKlasse: String, context: Context) {
         _selectedNotKlasse.value = newKlasse
 
 
-
-
     }
-    fun getNotKlase(context: Context){
+
+    fun getNotKlase(context: Context) {
         _selectedNotKlasse.value = SettingsUtil.readSetting("notification_class", context = context)
 
 

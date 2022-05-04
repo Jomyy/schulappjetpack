@@ -225,7 +225,9 @@ class SubsPageViewModel : ViewModel() {
             delay(250)
             val apiService = APIService.getInstance()
             try {
+                delay(300)
                 _subs.clear()
+
                 _subs.addAll(apiService.getSubs())
                 _klassenListe.clear()
                 var prevKlasse = ""

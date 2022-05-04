@@ -52,17 +52,19 @@ class MainActivity : ComponentActivity() {
         var notornot = "foodpage"
 
 
-
         val model: MainActivityViewModel by viewModels()
         val foodModel: FoodPageViewModel by viewModels()
         val subsModel: SubsPageViewModel by viewModels()
         val subsNextModel: SubsNextPageViewModel by viewModels()
-        model.setKlasse(SettingsUtil.readSetting("selected_class", context = applicationContext),context = applicationContext)
+        model.setKlasse(
+            SettingsUtil.readSetting("selected_class", context = applicationContext),
+            context = applicationContext
+        )
         if (extras != null) {
-            if(extras.getString("note") != null){
+            if (extras.getString("note") != null) {
                 notornot = extras.getString("note")!!
             }
-            if(extras.getString("klasse") != null){
+            if (extras.getString("klasse") != null) {
                 model.setKlasse(extras.getString("klasse")!!, context = applicationContext);
             }
         }
@@ -183,9 +185,14 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 0.dp),
                             actions = {
                                 IconButton(onClick = {
-                                    context.startActivity(Intent(context, SettingsActivity::class.java))
+                                    context.startActivity(
+                                        Intent(
+                                            context,
+                                            SettingsActivity::class.java
+                                        )
+                                    )
                                 }) {
-                                    Icon(Icons.Rounded.Settings,"settings")
+                                    Icon(Icons.Rounded.Settings, "settings")
                                 }
                             }
                         )
@@ -205,9 +212,9 @@ class MainActivityViewModel : ViewModel() {
 
     private val _selectedKlasse = mutableStateOf("")
     val selectedKlasse: String get() = _selectedKlasse.value
-    fun setKlasse(newKlasse: String,context: Context) {
+    fun setKlasse(newKlasse: String, context: Context) {
         _selectedKlasse.value = newKlasse
-        SettingsUtil.writeSetting("selected_class",newKlasse,context)
+        SettingsUtil.writeSetting("selected_class", newKlasse, context)
 
     }
 

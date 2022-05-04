@@ -7,13 +7,14 @@
     <string name="plsselectclass">Bitte Wähle Eine Klasse Aus</string>
     <string name="cancel">Abbruch</string>
     <string name="classselection">Klassenauswahl</string>
-    <string name="teacher">Lehrer*in:\n</string>
-    <string name="lesson">Stunde:\n</string>
-    <string name="lessontype">Fach:\n</string>
+    <string name="teacher">Lehrer*in:&#160;</string>
+    <string name="lesson">Stunde:&#160;</string>
+    <string name="lessontype">Fach:&#160;</string>
     <string name="selectedclass">Ausgewählte Klasse:&#160;</string>
     <string name="empty">Huch... Solch Eine Leere!</string>
     <string name="serverNotOn">Wir Konnten Leider Keine Verbindung Zum Server Herstellen</string>
     <string name="noSubs">Es Gibt Aktuell Keine Vertretungen</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="room">Raum:&#160;</string>
 
 </resources>

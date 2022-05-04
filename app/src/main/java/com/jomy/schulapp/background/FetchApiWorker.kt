@@ -66,13 +66,13 @@ class FetchApiWorker(private val context: Context, private val workerParams: Wor
             var onlyMyClassBefore = mutableListOf(mutableListOf(""));
 
             after.forEach { item ->
-                if(item[0] == selectedKlasse){
+                if (item[0] == selectedKlasse) {
                     onlyMyClass.add(item.toMutableList())
                 }
             }
 
-            before.forEach { item->
-                if(item[0] == selectedKlasse){
+            before.forEach { item ->
+                if (item[0] == selectedKlasse) {
                     onlyMyClassBefore.add(item.toMutableList())
                 }
             }
@@ -83,18 +83,14 @@ class FetchApiWorker(private val context: Context, private val workerParams: Wor
             if (onlyMyClass.deepEquals(onlyMyClassBefore)) {
 
                 return Result.success()
-            } else  {
+            } else {
                 startForegroundService(selectedKlasse)
                 return Result.success()
 
             }
 
 
-
-
-
         } catch (e: Exception) {
-
 
 
         }
@@ -104,20 +100,20 @@ class FetchApiWorker(private val context: Context, private val workerParams: Wor
 
     fun List<List<String>>.deepEquals(other: List<List<String>>): Boolean {
 
-    if(this.size == 0 || other.size == 0){
-        return true;
-    }
+        if (this.size == 0 || other.size == 0) {
+            return true;
+        }
         this.forEach({ item1 ->
             val firstIndex = this.indexOf(item1)
             item1.forEach({ item2 ->
                 val secondIndex = item1.indexOf(item2)
-                try{
+                try {
                     if (other[firstIndex][secondIndex] != item2) {
                         return false;
                     }
-                }catch (
-                    e:java.lang.Exception
-                ){
+                } catch (
+                    e: java.lang.Exception
+                ) {
                     return false;
                 }
 
@@ -125,9 +121,10 @@ class FetchApiWorker(private val context: Context, private val workerParams: Wor
         })
         return true;
     }
-    fun List<List<String>>.containsNested(item: String): Boolean{
-        this.forEach { item1->
-            if(item1[0] == item){
+
+    fun List<List<String>>.containsNested(item: String): Boolean {
+        this.forEach { item1 ->
+            if (item1[0] == item) {
                 return true;
             }
 
@@ -139,12 +136,17 @@ class FetchApiWorker(private val context: Context, private val workerParams: Wor
 
         val notificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val resultIntent = Intent(applicationContext, MainActivity::class.java,).setAction(Intent.ACTION_MAIN).putExtra("note","subsnextpage").putExtra("klasse",klasse)
-        val contentIntent = PendingIntent.getActivity(context, 0, resultIntent,  PendingIntent.FLAG_IMMUTABLE);
+        val resultIntent =
+            Intent(applicationContext, MainActivity::class.java).setAction(Intent.ACTION_MAIN)
+                .putExtra("note", "subsnextpage").putExtra("klasse", klasse)
+        val contentIntent =
+            PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        notificationManager.notify(0,
+        notificationManager.notify(
+            0,
             NotificationCompat.Builder(context, "schulapp_channel")
-                .setSmallIcon(R.mipmap.ic_launcher).setContentText("Dein Vertretungsplan hat sich geäandert").setContentTitle(klasse)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentText("Dein Vertretungsplan hat sich geäandert").setContentTitle(klasse)
                 .setAutoCancel(true).setContentIntent(contentIntent).build()
         )
 

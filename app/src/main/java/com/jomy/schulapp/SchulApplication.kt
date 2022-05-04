@@ -18,7 +18,7 @@ import java.time.Duration
 class SchulApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "schulapp_channel",
                 "BackgroundServices",

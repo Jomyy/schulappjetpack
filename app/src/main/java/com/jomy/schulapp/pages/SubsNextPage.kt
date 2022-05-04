@@ -242,10 +242,12 @@ class SubsNextPageViewModel : ViewModel() {
     fun refresh() {
         _isRefreshing.value = true;
         viewModelScope.launch {
-            delay(250)
+
             val apiService = APIService.getInstance()
             try {
+                delay(300)
                 _subsnext.clear()
+
                 _subsnext.addAll(apiService.getSubsNext())
                 _klassenListe.clear()
                 var prevKlasse = ""

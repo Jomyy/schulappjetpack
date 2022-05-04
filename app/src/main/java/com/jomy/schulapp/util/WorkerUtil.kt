@@ -10,29 +10,31 @@ import java.lang.Exception
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
-object WorkerUtil{
+object WorkerUtil {
 
 
     @JvmStatic
-    fun addWorker(applicationContext: Context){
-        try{
+    fun addWorker(applicationContext: Context) {
+        try {
             val workManager = WorkManager.getInstance(applicationContext)
 
-            if(SettingsUtil.readSetting("notification_class",applicationContext) == ""){
+            if (SettingsUtil.readSetting("notification_class", applicationContext) == "") {
                 workManager.cancelAllWork()
                 return
             }
             val fetchRequest = PeriodicWorkRequestBuilder<FetchApiWorker>(
                 15, TimeUnit.MINUTES
 
-                ).build()
+            ).build()
 
 
-            workManager.enqueueUniquePeriodicWork("schulapp_fetch",
-                ExistingPeriodicWorkPolicy.REPLACE,fetchRequest)
-        }catch (
+            workManager.enqueueUniquePeriodicWork(
+                "schulapp_fetch",
+                ExistingPeriodicWorkPolicy.REPLACE, fetchRequest
+            )
+        } catch (
             e: Exception
-        ){
+        ) {
 
         }
     }

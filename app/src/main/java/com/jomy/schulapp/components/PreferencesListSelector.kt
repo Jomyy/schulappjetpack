@@ -15,10 +15,16 @@ import com.jamal.composeprefs.ui.ifNotNullThen
 import com.jomy.schulapp.util.SettingsUtil
 
 @Composable
-fun PreferencesListSelector(list:List<String>,key:String,textToShow:String,isEnabledAll:Boolean = true,onSelected: (newSelection:String)->Unit = {}){
+fun PreferencesListSelector(
+    list: List<String>,
+    key: String,
+    textToShow: String,
+    isEnabledAll: Boolean = true,
+    onSelected: (newSelection: String) -> Unit = {}
+) {
     var showSelector by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    var textShow by remember{ mutableStateOf(SettingsUtil.readSetting(key, context = context))}
+    var textShow by remember { mutableStateOf(SettingsUtil.readSetting(key, context = context)) }
 
 
 
@@ -27,14 +33,17 @@ fun PreferencesListSelector(list:List<String>,key:String,textToShow:String,isEna
             showSelector = !showSelector
 
 
-        }, modifier = Modifier
-            .fillMaxWidth().padding(horizontal = 20.dp).height(50.dp)
-        , colors = ButtonDefaults.elevatedButtonColors(),
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+            .height(50.dp),
+        colors = ButtonDefaults.elevatedButtonColors(),
         enabled = isEnabledAll!!
     ) {
-        if(textShow == ""){
+        if (textShow == "") {
             Text(textToShow)
-        }else{
+        } else {
             Text(textShow)
         }
     }
@@ -47,7 +56,7 @@ fun PreferencesListSelector(list:List<String>,key:String,textToShow:String,isEna
 
             onPositiveClick = { newklasse ->
 
-                SettingsUtil.writeSetting(key,newklasse, context = context);
+                SettingsUtil.writeSetting(key, newklasse, context = context);
                 showSelector = !showSelector
                 textShow = newklasse
                 onSelected(newklasse)
