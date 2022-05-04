@@ -6,4 +6,5 @@
 - [x] Vertretungen Sehen
 - [x] Morgige Vertretungen Sehen  
 - [x] Material You
-- [ ] Push Benachrichtigungen  
+- [x] Push Benachrichtigungen
+- [ ] Krank Melden  
