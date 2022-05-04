@@ -10,52 +10,24 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.jamal.composeprefs.ui.PrefsScreen
-import com.jamal.composeprefs.ui.prefs.ListPref
-import com.jamal.composeprefs.ui.prefs.MultiSelectListPref
-import com.jamal.composeprefs.ui.prefs.SwitchPref
-import com.jamal.composeprefs.ui.prefs.TextPref
 import com.jomy.schulapp.api.APIService
-import com.jomy.schulapp.background.FetchApiWorker
 import com.jomy.schulapp.components.PreferencesListSelector
 import com.jomy.schulapp.components.PreferencesSwitch
-import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
 import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.WorkerUtil
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileReader
-import java.time.Duration
 
 
 class SettingsActivity : ComponentActivity() {
@@ -66,12 +38,12 @@ class SettingsActivity : ComponentActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val model: SettingsActivityViewModel by viewModels();
+        val model: SettingsActivityViewModel by viewModels()
 
         model.loadClasses()
         model.getNotKlase(context = applicationContext)
         setContent {
-            val context = LocalContext.current;
+            val context = LocalContext.current
 
             var isNoteEnabled by remember {
 
@@ -108,7 +80,8 @@ class SettingsActivity : ComponentActivity() {
                             key = "notifications_enabled",
                             onChange = {
                                 isNoteEnabled = it
-                            })
+                            }
+                        )
                         Divider(
                             Modifier
                                 .padding(vertical = 8.5.dp)
@@ -116,9 +89,10 @@ class SettingsActivity : ComponentActivity() {
                                 .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface
                         )
                         PreferencesListSelector(list = model.allClasses, key = "notification_class",
-                            "Klasse Auswählen", isNoteEnabled, {
-                                WorkerUtil.addWorker(context)
-                            })
+                            "Klasse Auswählen", isNoteEnabled
+                        ) {
+                            WorkerUtil.addWorker(context)
+                        }
 
                         Divider(
                             Modifier
@@ -135,8 +109,8 @@ class SettingsActivity : ComponentActivity() {
 
 class SettingsActivityViewModel : ViewModel() {
     private val _allClasses = mutableListOf<String>()
-    val allClasses: List<String> get() = _allClasses;
-    var errorMessage: String by mutableStateOf("")
+    val allClasses: List<String> get() = _allClasses
+    private var errorMessage: String by mutableStateOf("")
 
     fun loadClasses() {
         viewModelScope.launch {
@@ -156,12 +130,7 @@ class SettingsActivityViewModel : ViewModel() {
     }
 
     private val _selectedNotKlasse = mutableStateOf("")
-    val selectedNotKlasse: String get() = _selectedNotKlasse.value
-    fun setNotKlasse(newKlasse: String, context: Context) {
-        _selectedNotKlasse.value = newKlasse
 
-
-    }
 
     fun getNotKlase(context: Context) {
         _selectedNotKlasse.value = SettingsUtil.readSetting("notification_class", context = context)

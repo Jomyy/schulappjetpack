@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
-    val context = LocalContext.current;
+    val context = LocalContext.current
 
     Scaffold(bottomBar = {
         Column(
@@ -177,8 +177,6 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                                 textAlign = TextAlign.Center
                             )
                         }
-                    } else {
-
                     }
 
 
@@ -240,7 +238,7 @@ class SubsNextPageViewModel : ViewModel() {
     }
 
     fun refresh() {
-        _isRefreshing.value = true;
+        _isRefreshing.value = true
         viewModelScope.launch {
 
             val apiService = APIService.getInstance()
@@ -260,7 +258,7 @@ class SubsNextPageViewModel : ViewModel() {
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
-            _isRefreshing.value = false;
+            _isRefreshing.value = false
         }
     }
 }

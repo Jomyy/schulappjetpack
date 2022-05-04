@@ -129,7 +129,7 @@ class FoodPageViewModel : ViewModel() {
     }
 
     fun refresh() {
-        _isRefreshing.value = true;
+        _isRefreshing.value = true
         viewModelScope.launch {
             delay(300)
             val apiService = APIService.getInstance()
@@ -140,7 +140,7 @@ class FoodPageViewModel : ViewModel() {
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
-            _isRefreshing.value = false;
+            _isRefreshing.value = false
         }
 
     }

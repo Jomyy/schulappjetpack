@@ -8,4 +8,4 @@ data class SubData(
     val raum: String,
     val state: String,
     val bem: String
-);
+)

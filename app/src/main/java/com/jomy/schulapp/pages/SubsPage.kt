@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
-    val context = LocalContext.current;
+    val context = LocalContext.current
     Scaffold(bottomBar = {
         Column(
             modifier = Modifier
@@ -160,8 +160,6 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                         .verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                         Text(stringResource(id = R.string.noSubs), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
                     }
-                } else {
-
                 }
 
 
@@ -220,7 +218,7 @@ class SubsPageViewModel : ViewModel() {
 
     }
     fun refresh(){
-        _isRefreshing.value = true;
+        _isRefreshing.value = true
         viewModelScope.launch {
             delay(250)
             val apiService = APIService.getInstance()
@@ -240,7 +238,7 @@ class SubsPageViewModel : ViewModel() {
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
-            _isRefreshing.value = false;
+            _isRefreshing.value = false
         }
     }
 }

@@ -5,9 +5,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.jomy.schulapp.background.FetchApiWorker
-import java.io.File
 import java.lang.Exception
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 object WorkerUtil {

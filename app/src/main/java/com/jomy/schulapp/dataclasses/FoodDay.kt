@@ -5,4 +5,4 @@ data class FoodDay(
     val firstMeal: String,
     val secondMeal: String,
     val thirdMeal: String
-);
+)

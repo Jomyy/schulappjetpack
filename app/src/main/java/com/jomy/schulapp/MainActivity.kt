@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -25,9 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,7 +34,7 @@ import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.WorkerUtil
 
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 
 class MainActivity : ComponentActivity() {
 
@@ -65,7 +61,7 @@ class MainActivity : ComponentActivity() {
                 notornot = extras.getString("note")!!
             }
             if (extras.getString("klasse") != null) {
-                model.setKlasse(extras.getString("klasse")!!, context = applicationContext);
+                model.setKlasse(extras.getString("klasse")!!, context = applicationContext)
             }
         }
         WindowCompat.setDecorFitsSystemWindows(window, true)

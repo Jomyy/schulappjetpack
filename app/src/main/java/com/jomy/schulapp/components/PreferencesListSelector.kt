@@ -9,9 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.jamal.composeprefs.ui.ifNotNullThen
 import com.jomy.schulapp.util.SettingsUtil
 
 @Composable
@@ -39,7 +37,7 @@ fun PreferencesListSelector(
             .padding(horizontal = 20.dp)
             .height(50.dp),
         colors = ButtonDefaults.elevatedButtonColors(),
-        enabled = isEnabledAll!!
+        enabled = isEnabledAll
     ) {
         if (textShow == "") {
             Text(textToShow)
@@ -56,7 +54,7 @@ fun PreferencesListSelector(
 
             onPositiveClick = { newklasse ->
 
-                SettingsUtil.writeSetting(key, newklasse, context = context);
+                SettingsUtil.writeSetting(key, newklasse, context = context)
                 showSelector = !showSelector
                 textShow = newklasse
                 onSelected(newklasse)
