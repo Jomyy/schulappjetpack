@@ -3,19 +3,21 @@ package com.jomy.schulapp.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.ColorUtils
+import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
+lateinit var systemUiController: SystemUiController
+
 @Composable
-fun JetpacklernentutorialTheme(
+fun SchulAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -26,8 +28,8 @@ fun JetpacklernentutorialTheme(
     val darkThemeColors = darkColorScheme(
 
     )
-
-    val systemUiController = rememberSystemUiController()
+    @JvmStatic
+    systemUiController = rememberSystemUiController()
 
 
     val colors = if (supportsDynamic()) {

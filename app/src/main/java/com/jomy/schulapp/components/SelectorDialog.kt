@@ -29,79 +29,82 @@ fun SelectorDialog(
 
     Dialog(onDismissRequest = onDismiss) {
         Scaffold(modifier = Modifier
-            .padding(vertical = 40.dp)
-            .clip(MaterialTheme.shapes.large),containerColor = MaterialTheme.colorScheme.secondaryContainer,content = {
-            Surface(
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(12.dp),
+            .fillMaxHeight(0.97f)
+            .clip(MaterialTheme.shapes.large),
+            containerColor = MaterialTheme.colorScheme.surface,
+            content = {
+                Surface(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = RoundedCornerShape(25.dp),
+                    shadowElevation = 0.dp
 
                 ) {
 
-                Column(modifier = Modifier.padding(0.dp)) {
+                    Column() {
 
-                    // Color Selection
+                        // Color Selection
 
-                    Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxHeight(0.9f)) {
-                        Text(
-                            stringResource(id = R.string.selectclass),
-                            style = MaterialTheme.typography.headlineSmall,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(vertical = 10.dp)
-                        )
-                        if (klassen.isEmpty()) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(stringResource(id = R.string.empty))
-                            }
-                        } else {
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                , horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                items(klassen) { klassetext ->
-                                    OutlinedButton(onClick = {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                stringResource(id = R.string.selectclass),
+                                style = MaterialTheme.typography.headlineSmall,
+                                textAlign = TextAlign.Center,
 
-                                        onPositiveClick(klassetext)
-                                    }, modifier = Modifier.fillMaxWidth(.8f)) {
-                                        Text(klassetext)
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(vertical = 15.dp)
+                            )
+                            Divider(color = MaterialTheme.colorScheme.outline)
+                            if (klassen.isEmpty()) {
+                                Column(modifier = Modifier.padding(15.dp)) {
+                                    Text(stringResource(id = R.string.empty))
+                                }
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 68.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                                    ) {
+                                    items(klassen) { klassetext ->
+                                        OutlinedButton(onClick = {
+
+                                            onPositiveClick(klassetext)
+                                        }, modifier = Modifier.fillMaxWidth(.8f)) {
+                                            Text(klassetext)
+                                        }
                                     }
+
                                 }
-                                item {
-                                    Divider(
-                                        modifier = Modifier
-                                            .padding(4.dp)
-                                            .height(0.dp)
-                                    )
-                                }
+
                             }
+
 
                         }
 
 
-
-
                     }
-
-
                 }
-            }
-        }, bottomBar = {
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceTint, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding()
-
-
-            ) {
-                TextButton(onClick = { onPositiveClick(oldSelection) },modifier = Modifier.height(72.dp)) {
-                    Text(
-                        stringResource(id = R.string.cancel),
-                        textAlign = TextAlign.End,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+            },
+            bottomBar = {
+                Divider(color = MaterialTheme.colorScheme.outline)
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .fillMaxWidth()
+                ) {
+                    TextButton(onClick = { onPositiveClick(oldSelection) }) {
+                        Text(
+                            stringResource(id = R.string.cancel),
+                            textAlign = TextAlign.End,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-            }
-        })
+
+            })
 
     }
 }

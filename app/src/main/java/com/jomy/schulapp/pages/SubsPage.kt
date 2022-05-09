@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
+fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
     val context = LocalContext.current
@@ -51,9 +51,9 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                     .fillMaxWidth(.9f)
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
-                if(mainModel.selectedKlasse != ""){
+                if (mainModel.selectedKlasse != "") {
                     Text(stringResource(id = R.string.selectedclass) + mainModel.selectedKlasse)
-                }else{
+                } else {
                     Text(stringResource(id = R.string.selectclass))
                 }
 
@@ -92,95 +92,111 @@ fun SubsPage(model: SubsPageViewModel,mainModel: MainActivityViewModel) {
                 state = rememberSwipeRefreshState(isRefreshing),
                 onRefresh = { model.refresh() },
             ) {
-            if (model.errorMessage.isEmpty()) {
-                if(model.subs.isNotEmpty()){
-                    if(mainModel.selectedKlasse == ""){
-                        Column(modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                            Text(stringResource(id = R.string.plsselectclass), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
-                        }
-                    }else{
-                        LazyColumn(
-                            modifier = Modifier
-                                .padding(
-                                    top = 0.dp,
-                                    bottom = 0.dp,
-                                    start = 15.dp,
-                                    end = 15.dp
-                                )
-                                .fillMaxHeight()
-                                .fillMaxWidth()
-                        ) {
-                            item {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(7.dp)
-                                        .height(0.dp)
+                if (model.errorMessage.isEmpty()) {
+                    if (model.subs.isNotEmpty()) {
+                        if (mainModel.selectedKlasse == "") {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                                    .verticalScroll(rememberScrollState()),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    stringResource(id = R.string.plsselectclass),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center
                                 )
                             }
-                            items(model.subs) { sub ->
-
-                                if (sub[0] == mainModel.selectedKlasse) {
-                                    SubCard(
-                                        subData = SubData(
-                                            sub[0],
-                                            sub[1],
-                                            sub[2],
-                                            sub[3],
-                                            sub[4],
-                                            sub[5],
-                                            sub[6]
-                                        )
+                        } else {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .padding(
+                                        top = 0.dp,
+                                        bottom = 0.dp,
+                                        start = 15.dp,
+                                        end = 15.dp
                                     )
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                            ) {
+                                item {
                                     Divider(
                                         modifier = Modifier
                                             .padding(7.dp)
                                             .height(0.dp)
                                     )
                                 }
+                                items(model.subs) { sub ->
+
+                                    if (sub[0] == mainModel.selectedKlasse) {
+                                        SubCard(
+                                            subData = SubData(
+                                                sub[0],
+                                                sub[1],
+                                                sub[2],
+                                                sub[3],
+                                                sub[4],
+                                                sub[5],
+                                                sub[6]
+                                            )
+                                        )
+                                        Divider(
+                                            modifier = Modifier
+                                                .padding(7.dp)
+                                                .height(0.dp)
+                                        )
+                                    }
+
+                                }
+                                item {
+                                    Divider(
+                                        modifier = Modifier
+                                            .padding(26.dp)
+                                            .height(0.dp)
+                                    )
+                                }
 
                             }
-                            item {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(26.dp)
-                                        .height(0.dp)
-                                )
-                            }
+                        }
 
+                    } else if (!model.isRefreshing.collectAsState().value) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState()),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                stringResource(id = R.string.noSubs),
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center
+                            )
                         }
                     }
 
-                }else if(!model.isRefreshing.collectAsState().value){
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text(stringResource(id = R.string.noSubs), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+
+                } else {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Text(stringResource(id = R.string.serverNotOn))
                     }
-                }
 
-
-            } else {
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .verticalScroll(rememberScrollState())) {
-                    Text(stringResource(id = R.string.serverNotOn))
                 }
 
             }
-
-        }
         }
 
 
     }
 }
-
 
 
 class SubsPageViewModel : ViewModel() {
@@ -217,8 +233,10 @@ class SubsPageViewModel : ViewModel() {
         Log.d("ERRORFETCH", errorMessage)
 
     }
-    fun refresh(){
+
+    fun refresh() {
         _isRefreshing.value = true
+        errorMessage = ""
         viewModelScope.launch {
             delay(250)
             val apiService = APIService.getInstance()

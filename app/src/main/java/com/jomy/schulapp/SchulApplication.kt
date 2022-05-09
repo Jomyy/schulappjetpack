@@ -10,17 +10,17 @@ class SchulApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-            val channel = NotificationChannel(
-                "schulapp_channel",
-                "BackgroundServices",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            "schulapp_channel",
+            "BackgroundServices",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
 
 
         WorkerUtil.addWorker(applicationContext)
-
+        notificationManager.cancelAll()
     }
 
 

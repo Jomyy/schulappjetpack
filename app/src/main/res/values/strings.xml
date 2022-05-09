@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">SchulApp</string>
+    <string name="settings_activity_title">Einstellungen</string>
     <string name="foodplan">Essensplan</string>
     <string name="substitutions">Vertretungen</string>
     <string name="substitutionsnext">Vertr. Morgen</string>
     <string name="selectclass">Klasse Auswählen</string>
     <string name="plsselectclass">Bitte Wähle Eine Klasse Aus</string>
-    <string name="cancel">Abbruch</string>
+    <string name="cancel">Abbrechen</string>
     <string name="classselection">Klassenauswahl</string>
     <string name="teacher">Lehrer*in:&#160;</string>
     <string name="lesson">Stunde:&#160;</string>
@@ -14,7 +15,7 @@
     <string name="empty">Huch... Solch Eine Leere!</string>
     <string name="serverNotOn">Wir Konnten Leider Keine Verbindung Zum Server Herstellen</string>
     <string name="noSubs">Es Gibt Aktuell Keine Vertretungen</string>
-    <string name="title_activity_settings">SettingsActivity</string>
     <string name="room">Raum:&#160;</string>
+    <string name="pref_note">Benachrichtigungen</string>
 
 </resources>

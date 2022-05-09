@@ -1,16 +1,16 @@
 package com.jomy.schulapp.components
 
+
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jomy.schulapp.util.SettingsUtil
+
 
 @Composable
 fun PreferencesListSelector(
@@ -35,7 +35,7 @@ fun PreferencesListSelector(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .height(50.dp),
+            .height(60.dp),
         colors = ButtonDefaults.elevatedButtonColors(),
         enabled = isEnabledAll
     ) {
@@ -45,6 +45,7 @@ fun PreferencesListSelector(
             Text(textShow)
         }
     }
+
     if (showSelector) {
         SelectorDialog(
             onDismiss = {

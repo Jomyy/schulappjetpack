@@ -12,9 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Coronavirus
-import androidx.compose.material.icons.rounded.Fastfood
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,11 +27,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jomy.schulapp.pages.*
-import com.jomy.schulapp.ui.theme.JetpacklernentutorialTheme
+import com.jomy.schulapp.ui.theme.SchulAppTheme
 import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.WorkerUtil
-
-
 
 
 class MainActivity : ComponentActivity() {
@@ -78,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-            JetpacklernentutorialTheme {
+            SchulAppTheme {
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(80.dp)) {
                         NavigationBarItem(
@@ -86,7 +82,6 @@ class MainActivity : ComponentActivity() {
                             onClick =
                             {
                                 navController.navigate("foodpage")
-
                             },
                             label = {
                                 Text(
@@ -106,9 +101,6 @@ class MainActivity : ComponentActivity() {
                             selected = subsSelected.value,
                             onClick = {
                                 navController.navigate("subspage")
-                                foodSelected.value = false
-                                subsSelected.value = true
-                                subsNextSelected.value = false
                             },
                             label = {
                                 Text(
@@ -119,7 +111,7 @@ class MainActivity : ComponentActivity() {
                             },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Coronavirus, "Subs"
+                                    Icons.Rounded.CalendarToday, "Subs"
                                 )
                             },
                             modifier = Modifier.padding(bottom = 0.dp)
@@ -128,9 +120,6 @@ class MainActivity : ComponentActivity() {
                             selected = subsNextSelected.value,
                             onClick = {
                                 navController.navigate("subsnextpage")
-                                foodSelected.value = false
-                                subsSelected.value = false
-                                subsNextSelected.value = true
                             },
                             label = {
                                 Text(
@@ -141,10 +130,11 @@ class MainActivity : ComponentActivity() {
                             },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Coronavirus, "substitutionsnextpage"
+                                    Icons.Rounded.PermContactCalendar, "substitutionsnextpage"
                                 )
                             }, modifier = Modifier.padding(bottom = 0.dp)
                         )
+
                     }
                 }, content = { innerPadding ->
 
@@ -155,19 +145,23 @@ class MainActivity : ComponentActivity() {
                                 foodSelected.value = true
                                 subsSelected.value = false
                                 subsNextSelected.value = false
+
                             }
                             composable("subspage") {
                                 SubsPage(subsModel, model)
                                 foodSelected.value = false
                                 subsSelected.value = true
                                 subsNextSelected.value = false
+
                             }
                             composable("subsnextpage") {
                                 SubsNextPage(subsNextModel, model)
                                 foodSelected.value = false
                                 subsSelected.value = false
                                 subsNextSelected.value = true
+
                             }
+
 
                         }
                     }

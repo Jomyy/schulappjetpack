@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
@@ -26,7 +24,6 @@ import androidx.core.graphics.ColorUtils
 import com.jomy.schulapp.util.SettingsUtil
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreferencesSwitch(
     scale: Float = 1f,

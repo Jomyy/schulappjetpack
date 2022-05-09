@@ -240,7 +240,7 @@ class SubsNextPageViewModel : ViewModel() {
     fun refresh() {
         _isRefreshing.value = true
         viewModelScope.launch {
-
+            errorMessage = ""
             val apiService = APIService.getInstance()
             try {
                 delay(300)

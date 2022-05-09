@@ -26,7 +26,7 @@ fun SubCard(subData: SubData) {
     Surface(
         shadowElevation = 0.dp,
         shape = MaterialTheme.shapes.large,
-        tonalElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .border(
                 width = 1.dp,
@@ -37,7 +37,7 @@ fun SubCard(subData: SubData) {
     ) {
         Column(
             modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             if (subData.state == "") {
                 Text("Vertreten", style = MaterialTheme.typography.titleLarge)
@@ -48,8 +48,8 @@ fun SubCard(subData: SubData) {
             Divider(
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
-                    .height(0.5.dp)
-                    .fillMaxWidth(.5f)
+                    .height(0.dp)
+                    .fillMaxWidth(.1f)
             )
             Text(
                 stringResource(id = R.string.lessontype) + subData.fach,
@@ -59,8 +59,8 @@ fun SubCard(subData: SubData) {
             Divider(
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
-                    .height(0.5.dp)
-                    .fillMaxWidth(.5f)
+                    .height(0.dp)
+                    .fillMaxWidth(.1f)
             )
 
             Text(
@@ -71,8 +71,8 @@ fun SubCard(subData: SubData) {
             Divider(
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
-                    .height(0.5.dp)
-                    .fillMaxWidth(.5f)
+                    .height(0.dp)
+                    .fillMaxWidth(.1f)
             )
 
             Text(
@@ -83,8 +83,8 @@ fun SubCard(subData: SubData) {
             Divider(
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp)
-                    .height(0.5.dp)
-                    .fillMaxWidth(.5f)
+                    .height(0.dp)
+                    .fillMaxWidth(.1f)
             )
             Text(
                 stringResource(id = R.string.room) + subData.raum,

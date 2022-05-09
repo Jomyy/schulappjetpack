@@ -20,6 +20,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
 
+
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.dataclasses.FoodDay
 import kotlinx.coroutines.delay
@@ -133,6 +134,7 @@ class FoodPageViewModel : ViewModel() {
         viewModelScope.launch {
             delay(300)
             val apiService = APIService.getInstance()
+            errorMessage = ""
             try {
                 _food.clear()
                 _food.addAll(apiService.getFood())

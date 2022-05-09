@@ -23,7 +23,7 @@ fun FoodCard(foodData: FoodDay) {
     Surface(
         shadowElevation = 0.dp,
         shape = MaterialTheme.shapes.large,
-        tonalElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .border(
                 width = 1.dp,
