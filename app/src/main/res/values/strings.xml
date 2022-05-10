@@ -13,7 +13,7 @@
     <string name="lessontype">Fach:&#160;</string>
     <string name="selectedclass">Ausgewählte Klasse:&#160;</string>
     <string name="empty">Huch... Solch Eine Leere!</string>
-    <string name="serverNotOn">Wir Konnten Leider Keine Verbindung Zum Server Herstellen</string>
+    <string name="serverNotOn">Du Bist Offline</string>
     <string name="noSubs">Es Gibt Aktuell Keine Vertretungen</string>
     <string name="room">Raum:&#160;</string>
     <string name="pref_note">Benachrichtigungen</string>

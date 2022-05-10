@@ -34,7 +34,7 @@ fun PreferencesSwitch(
 
             MaterialTheme.colorScheme.tertiaryContainer.toArgb(),
             MaterialTheme.colorScheme.surfaceTint.toArgb(),
-            0.5f
+            0.43f
         )
     ),
     uncheckedTrackColor: Color = MaterialTheme.colorScheme.inverseOnSurface,

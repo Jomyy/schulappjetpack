@@ -7,6 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
+import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -184,9 +187,16 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
                         Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .verticalScroll(rememberScrollState())
+                            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp) ,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
                     ) {
-                        Text(stringResource(id = R.string.serverNotOn))
+                        Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
+                        Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
+
+                        TextButton(onClick = {model.refresh()}) {
+                            Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                        }
                     }
 
                 }
@@ -236,7 +246,7 @@ class SubsPageViewModel : ViewModel() {
 
     fun refresh() {
         _isRefreshing.value = true
-        errorMessage = ""
+
         viewModelScope.launch {
             delay(250)
             val apiService = APIService.getInstance()
@@ -246,6 +256,7 @@ class SubsPageViewModel : ViewModel() {
 
                 _subs.addAll(apiService.getSubs())
                 _klassenListe.clear()
+
                 var prevKlasse = ""
                 _subs.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
@@ -253,6 +264,7 @@ class SubsPageViewModel : ViewModel() {
                     }
                     prevKlasse = stundelist[0]
                 }
+                errorMessage = ""
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }

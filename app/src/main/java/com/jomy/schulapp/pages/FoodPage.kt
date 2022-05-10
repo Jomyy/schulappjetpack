@@ -1,18 +1,21 @@
 package com.jomy.schulapp.pages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
+import androidx.compose.material.icons.rounded.WifiOff
+import androidx.compose.material3.*
 import com.jomy.schulapp.components.*
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodPage(model: FoodPageViewModel) {
     LaunchedEffect(Unit, block = {
@@ -68,6 +72,8 @@ fun FoodPage(model: FoodPageViewModel) {
                         modifier = Modifier
                             .padding(7.dp)
                             .height(0.dp)
+                            .animateItemPlacement()
+
                     )
                 }
             }
@@ -91,9 +97,16 @@ fun FoodPage(model: FoodPageViewModel) {
                     .verticalScroll(
                         rememberScrollState()
                     )
+                    .padding(horizontal = 20.dp) ,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                Text(stringResource(id = R.string.serverNotOn))
+                Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
+                Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
 
+                TextButton(onClick = {model.refresh()}) {
+                    Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                }
             }
         }
     }
@@ -134,11 +147,11 @@ class FoodPageViewModel : ViewModel() {
         viewModelScope.launch {
             delay(300)
             val apiService = APIService.getInstance()
-            errorMessage = ""
+
             try {
                 _food.clear()
                 _food.addAll(apiService.getFood())
-
+                errorMessage = ""
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }

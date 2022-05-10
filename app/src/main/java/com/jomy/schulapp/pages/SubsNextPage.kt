@@ -6,6 +6,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
+import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -185,9 +188,16 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
+                            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp) ,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
                     ) {
-                        Text(stringResource(id = R.string.serverNotOn))
+                        Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
+                        Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
+
+                        TextButton(onClick = {model.refresh()}) {
+                            Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                        }
                     }
 
                 }
@@ -240,14 +250,15 @@ class SubsNextPageViewModel : ViewModel() {
     fun refresh() {
         _isRefreshing.value = true
         viewModelScope.launch {
-            errorMessage = ""
+
             val apiService = APIService.getInstance()
             try {
                 delay(300)
                 _subsnext.clear()
-
                 _subsnext.addAll(apiService.getSubsNext())
+
                 _klassenListe.clear()
+
                 var prevKlasse = ""
                 _subsnext.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
@@ -255,6 +266,7 @@ class SubsNextPageViewModel : ViewModel() {
                     }
                     prevKlasse = stundelist[0]
                 }
+                errorMessage = ""
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
