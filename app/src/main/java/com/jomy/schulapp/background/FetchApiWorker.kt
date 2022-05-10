@@ -118,8 +118,8 @@ class FetchApiWorker(private val context: Context, workerParams: WorkerParameter
         notificationManager.notify(
             0,
             NotificationCompat.Builder(context, "schulapp_channel")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("Dein Vertretungsplan hat sich geäandert").setContentTitle(klasse)
+                .setSmallIcon(R.drawable.icon)
+                .setContentText("Dein Vertretungsplan hat sich geändert").setContentTitle(klasse)
                 .setAutoCancel(true).setContentIntent(contentIntent).build()
         )
 
