@@ -75,8 +75,9 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.7.1")
     // optional - RxJava2 support
     implementation("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+    implementation 'com.google.android.material:material:1.6.0'
     implementation "com.github.JamalMulla:ComposePrefs:1.0.0" // Current is 1.0.0
-
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha01'
     // optional - RxJava3 support
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
     // Optional - Easy access to preferences from modules without compose dependency

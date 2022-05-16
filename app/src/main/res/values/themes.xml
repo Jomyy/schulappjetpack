@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.schulapp" parent="android:Theme.Material.Light.NoActionBar">
-
+    <style name="Theme.schulapp" parent="Theme.Material3.DynamicColors.DayNight">
+        <item name="windowSplashScreenBackground">@color/material_dynamic_neutral10</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icon</item>
 
     </style>
+
 
 </resources>

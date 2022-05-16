@@ -61,7 +61,8 @@ fun SelectorDialog(
                             } else {
                                 LazyColumn(
                                     modifier = Modifier
-                                        .fillMaxWidth(),
+                                        .fillMaxWidth()
+                                        ,
                                     horizontalAlignment = Alignment.CenterHorizontally,
 
                                     ) {
