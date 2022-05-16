@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -79,7 +80,11 @@ class MainActivity : ComponentActivity() {
 
             val systemUiController = rememberSystemUiController()
 
-
+            LaunchedEffect(key1 = Unit, block ={
+                foodModel.loadFood()
+                subsModel.loadSubs()
+                subsNextModel.loadSubsNext()
+            } )
 
 
 

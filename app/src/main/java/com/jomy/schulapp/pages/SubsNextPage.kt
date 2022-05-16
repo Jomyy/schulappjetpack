@@ -64,9 +64,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
 
     }) {
 
-        LaunchedEffect(Unit, block = {
-            model.loadSubsNext()
-        })
+
 
         Column(
 

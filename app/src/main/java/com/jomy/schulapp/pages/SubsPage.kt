@@ -66,9 +66,7 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
 
     }) {
 
-        LaunchedEffect(Unit, block = {
-            model.loadSubs()
-        })
+
         Column(
 
             horizontalAlignment = Alignment.CenterHorizontally,

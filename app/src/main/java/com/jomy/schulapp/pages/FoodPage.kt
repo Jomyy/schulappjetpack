@@ -1,6 +1,7 @@
 package com.jomy.schulapp.pages
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -34,14 +35,13 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodPage(model: FoodPageViewModel) {
-    LaunchedEffect(Unit, block = {
-        model.loadFood()
-    })
+
     val isRefreshing by model.isRefreshing.collectAsState()
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
         onRefresh = { model.refresh() },
+
     ) {
         if (model.errorMessage.isEmpty()) {
 
