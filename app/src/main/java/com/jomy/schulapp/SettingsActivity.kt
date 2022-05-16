@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.components.PreferencesListSelector
 import com.jomy.schulapp.components.PreferencesSwitch
@@ -42,6 +43,8 @@ class SettingsActivity : ComponentActivity() {
         model.loadClasses()
         model.getNotKlase(context = applicationContext)
         setContent {
+            val systemUiController = rememberSystemUiController()
+
 
             val context = LocalContext.current
 
@@ -53,6 +56,15 @@ class SettingsActivity : ComponentActivity() {
             }
 
             SchulAppTheme {
+                val matcolors = MaterialTheme.colorScheme
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = matcolors.background
+                    )
+                    systemUiController.setNavigationBarColor(
+                        color = matcolors.background
+                    )
+                }
                 // A surface container using the 'background' color from the theme
                 Scaffold(topBar = {
                     Surface(shadowElevation = 4.dp) {

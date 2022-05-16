@@ -8,7 +8,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
-import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.*
 import com.jomy.schulapp.components.*
 import androidx.compose.runtime.*
@@ -55,8 +54,9 @@ fun FoodPage(model: FoodPageViewModel) {
                         end = 15.dp
                     )
                     .fillMaxHeight()
-                    .fillMaxWidth()
-            ) {
+                    .fillMaxWidth(),
+
+                ) {
                 item {
                     Divider(
                         modifier = Modifier
@@ -97,14 +97,22 @@ fun FoodPage(model: FoodPageViewModel) {
                     .verticalScroll(
                         rememberScrollState()
                     )
-                    .padding(horizontal = 20.dp) ,
+                    .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
-                Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
+                Icon(
+                    Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
+                    "WifiOff",
+                    modifier = Modifier.size(45.dp),
+                )
+                Text(
+                    stringResource(id = R.string.serverNotOn),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
 
-                TextButton(onClick = {model.refresh()}) {
+                TextButton(onClick = { model.refresh() }) {
                     Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
                 }
             }

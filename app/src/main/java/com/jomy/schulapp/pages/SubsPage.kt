@@ -9,7 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
-import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -74,6 +73,7 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
+                .padding(it)
         ) {
             if (showSelector) {
                 SelectorDialog(
@@ -187,14 +187,23 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
                         Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp) ,
+                            .verticalScroll(rememberScrollState())
+                            .padding(horizontal = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
-                        Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
+                        Icon(
+                            Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
+                            "WifiOff",
+                            modifier = Modifier.size(45.dp),
+                        )
+                        Text(
+                            stringResource(id = R.string.serverNotOn),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
 
-                        TextButton(onClick = {model.refresh()}) {
+                        TextButton(onClick = { model.refresh() }) {
                             Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
                         }
                     }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
-import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -73,6 +72,7 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
+                .padding(it)
         ) {
             if (showSelector) {
                 SelectorDialog(
@@ -123,8 +123,10 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                                         end = 15.dp
                                     )
                                     .fillMaxHeight()
-                                    .fillMaxWidth()
-                            ) {
+                                    .fillMaxWidth(),
+
+
+                                ) {
                                 item {
                                     Divider(
                                         modifier = Modifier
@@ -132,26 +134,34 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                                             .height(0.dp)
                                     )
                                 }
-                                items(model.subsnext) { sub ->
+                                items(model.subsnext, key = { message ->
+                                    // Return a stable + unique key for the item
+                                    message[0] + message[1] + message[2] + message[3] + message[4] + message[5] + message[6]
+                                }) { sub ->
 
                                     if (sub[0] == mainModel.selectedKlasse) {
-                                        SubCard(
-                                            subData = SubData(
-                                                sub[0],
-                                                sub[1],
-                                                sub[2],
-                                                sub[3],
-                                                sub[4],
-                                                sub[5],
-                                                sub[6]
+                                        Column {
+                                            SubCard(
+                                                subData = SubData(
+                                                    sub[0],
+                                                    sub[1],
+                                                    sub[2],
+                                                    sub[3],
+                                                    sub[4],
+                                                    sub[5],
+                                                    sub[6]
+                                                )
                                             )
-                                        )
-                                        Divider(
-                                            modifier = Modifier
-                                                .padding(7.dp)
-                                                .height(0.dp)
-                                        )
+                                            Divider(
+                                                modifier = Modifier
+                                                    .padding(7.dp)
+                                                    .height(0.dp)
+                                            )
+
+
+                                        }
                                     }
+
 
                                 }
                                 item {
@@ -188,14 +198,23 @@ fun SubsNextPage(model: SubsNextPageViewModel, mainModel: MainActivityViewModel)
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth()
-                            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp) ,
+                            .verticalScroll(rememberScrollState())
+                            .padding(horizontal = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Icon(Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,"WifiOff", modifier = Modifier.size(45.dp),)
-                        Text(stringResource(id = R.string.serverNotOn), textAlign = TextAlign.Center,style = MaterialTheme.typography.headlineSmall)
+                        Icon(
+                            Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
+                            "WifiOff",
+                            modifier = Modifier.size(45.dp),
+                        )
+                        Text(
+                            stringResource(id = R.string.serverNotOn),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
 
-                        TextButton(onClick = {model.refresh()}) {
+                        TextButton(onClick = { model.refresh() }) {
                             Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
                         }
                     }

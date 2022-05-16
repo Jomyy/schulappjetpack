@@ -14,18 +14,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.SchulAppTheme
 import com.jomy.schulapp.util.SettingsUtil
@@ -72,9 +77,34 @@ class MainActivity : ComponentActivity() {
 
             WorkerUtil.addWorker(context)
 
+            val systemUiController = rememberSystemUiController()
+
+
+
 
 
             SchulAppTheme {
+                val matcolors = MaterialTheme.colorScheme
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = Color(
+                            ColorUtils.blendARGB(
+                                matcolors.surface.toArgb(),
+                                matcolors.primary.toArgb(),
+                                0.09f
+                            )
+                        )
+                    )
+                    systemUiController.setNavigationBarColor(
+                        color = Color(
+                            ColorUtils.blendARGB(
+                                matcolors.surface.toArgb(),
+                                matcolors.primary.toArgb(),
+                                0.085f
+                            )
+                        )
+                    )
+                }
                 Scaffold(bottomBar = {
                     NavigationBar(modifier = Modifier.height(80.dp)) {
                         NavigationBarItem(
@@ -168,7 +198,7 @@ class MainActivity : ComponentActivity() {
 
                 }, topBar = {
                     Surface(shadowElevation = 4.dp, tonalElevation = 4.dp) {
-                        CenterAlignedTopAppBar(
+                        SmallTopAppBar(
                             scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(
                                 canScroll = { true }),
                             title = { Text(stringResource(id = R.string.app_name)) },

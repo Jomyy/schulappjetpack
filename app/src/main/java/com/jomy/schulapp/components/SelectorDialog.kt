@@ -36,11 +36,11 @@ fun SelectorDialog(
                 Surface(
                     color = MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(25.dp),
-                    shadowElevation = 0.dp
-
+                    shadowElevation = 0.dp,
+                    modifier = Modifier.padding(it)
                 ) {
 
-                    Column() {
+                    Column {
 
                         // Color Selection
 
