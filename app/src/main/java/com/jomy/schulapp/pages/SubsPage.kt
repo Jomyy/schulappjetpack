@@ -1,6 +1,7 @@
 package com.jomy.schulapp.pages
 
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
@@ -73,7 +75,7 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(it)
+
         ) {
             if (showSelector) {
                 SelectorDialog(
