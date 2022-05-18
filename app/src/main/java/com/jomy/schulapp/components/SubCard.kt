@@ -1,14 +1,8 @@
 package com.jomy.schulapp.components
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,21 +13,22 @@ import com.jomy.schulapp.R
 
 import com.jomy.schulapp.dataclasses.SubData
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubCard(subData: SubData) {
 
 
-    Surface(
-        shadowElevation = 0.dp,
+    Card(
+
         shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surface,
+        colors = CardDefaults.outlinedCardColors(),
         modifier = Modifier
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
                 shape = MaterialTheme.shapes.large
             )
-            .fillMaxWidth()
+            .fillMaxSize()
     ) {
         Column(
             modifier = Modifier.padding(20.dp),

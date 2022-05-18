@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -38,7 +40,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
+fun SubsPage(model: MainActivityViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
     val context = LocalContext.current
@@ -55,8 +57,8 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
                     .fillMaxWidth(.9f)
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
-                if (mainModel.selectedKlasse != "") {
-                    Text(stringResource(id = R.string.selectedclass) + mainModel.selectedKlasse)
+                if (model.selectedKlasse != "") {
+                    Text(stringResource(id = R.string.selectedclass) + model.selectedKlasse)
                 } else {
                     Text(stringResource(id = R.string.selectclass))
                 }
@@ -83,12 +85,12 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
                     },
 
                     onPositiveClick = { newklasse ->
-                        mainModel.setKlasse(newKlasse = newklasse, context = context)
+                        model.setKlasse(newKlasse = newklasse, context = context)
                         showSelector = !showSelector
 
                     },
                     klassen = model.klassenListe,
-                    oldSelection = mainModel.selectedKlasse
+                    oldSelection = model.selectedKlasse
                 )
             }
             SwipeRefresh(
@@ -97,7 +99,7 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
             ) {
                 if (model.errorMessage.isEmpty()) {
                     if (model.subs.isNotEmpty()) {
-                        if (mainModel.selectedKlasse == "") {
+                        if (model.selectedKlasse == "") {
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
@@ -113,53 +115,39 @@ fun SubsPage(model: SubsPageViewModel, mainModel: MainActivityViewModel) {
                                 )
                             }
                         } else {
-                            LazyColumn(
+                            LazyVerticalGrid(
                                 modifier = Modifier
-                                    .padding(
-                                        top = 0.dp,
-                                        bottom = 0.dp,
-                                        start = 15.dp,
-                                        end = 15.dp
-                                    )
-                                    .fillMaxHeight()
-                                    .fillMaxWidth()
-                            ) {
-                                item {
-                                    Divider(
-                                        modifier = Modifier
-                                            .padding(7.dp)
-                                            .height(0.dp)
-                                    )
-                                }
-                                items(model.subs) { sub ->
+                                    .fillMaxSize()
+                                    .padding(it),
+                                columns = GridCells.Adaptive(300.dp),
 
-                                    if (sub[0] == mainModel.selectedKlasse) {
+
+                                ) {
+
+                                items(model.selectedSubs.size) { sub ->
+
+
+                                    Column (modifier = Modifier.padding(7.dp)){
                                         SubCard(
                                             subData = SubData(
-                                                sub[0],
-                                                sub[1],
-                                                sub[2],
-                                                sub[3],
-                                                sub[4],
-                                                sub[5],
-                                                sub[6]
+                                                model.selectedSubs[sub][0],
+                                                model.selectedSubs[sub][1],
+                                                model.selectedSubs[sub][2],
+                                                model.selectedSubs[sub][3],
+                                                model.selectedSubs[sub][4],
+                                                model.selectedSubs[sub][5],
+                                                model.selectedSubs[sub][6]
                                             )
                                         )
-                                        Divider(
-                                            modifier = Modifier
-                                                .padding(7.dp)
-                                                .height(0.dp)
-                                        )
+
+
+
+
                                     }
 
+
                                 }
-                                item {
-                                    Divider(
-                                        modifier = Modifier
-                                            .padding(26.dp)
-                                            .height(0.dp)
-                                    )
-                                }
+
 
                             }
                         }

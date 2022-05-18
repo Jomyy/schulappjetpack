@@ -32,10 +32,9 @@ fun FoodCard(foodData: FoodDay) {
     }
 
 
-    Surface(
-        shadowElevation = 0.dp,
+    Card(
+
         shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .border(
                 width = 1.dp,
@@ -51,7 +50,8 @@ fun FoodCard(foodData: FoodDay) {
                 context = ctx,
                 newSetting = contentVisible.toString()
             )
-        }
+        },
+        colors = CardDefaults.outlinedCardColors()
     ) {
         Column(
             modifier = Modifier.padding(vertical = 10.dp),

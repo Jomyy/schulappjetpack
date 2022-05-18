@@ -4,6 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
@@ -26,6 +30,7 @@ import com.jomy.schulapp.R
 
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.dataclasses.FoodDay
+import com.jomy.schulapp.util.SettingsUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,7 +50,7 @@ fun FoodPage(model: FoodPageViewModel) {
     ) {
         if (model.errorMessage.isEmpty()) {
 
-            LazyColumn(
+            LazyVerticalGrid(
                 modifier = Modifier
                     .padding(
                         top = 0.dp,
@@ -55,26 +60,17 @@ fun FoodPage(model: FoodPageViewModel) {
                     )
                     .fillMaxHeight()
                     .fillMaxWidth(),
+                    columns = GridCells.Adaptive(400.dp),
 
                 ) {
-                item {
-                    Divider(
-                        modifier = Modifier
-                            .padding(7.dp)
-                            .height(0.dp)
-                    )
-                }
-                items(model.food) { foodDay ->
+
+                items(model.food.size) { foodDay ->
+
+                    Column(modifier = Modifier.padding(7.dp)){
+                        FoodCard(foodData = FoodDay(model.food[foodDay][0], model.food[foodDay][1], model.food[foodDay][2], model.food[foodDay][3]))
+                    }
 
 
-                    FoodCard(foodData = FoodDay(foodDay[0], foodDay[1], foodDay[2], foodDay[3]))
-                    Divider(
-                        modifier = Modifier
-                            .padding(7.dp)
-                            .height(0.dp)
-                            .animateItemPlacement()
-
-                    )
                 }
             }
             if (model.food.isEmpty()) {
