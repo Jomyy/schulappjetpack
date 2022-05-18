@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
         val model: MainActivityViewModel by viewModels()
         val foodModel: FoodPageViewModel by viewModels()
-        val subsModel: SubsPageViewModel by viewModels()
+
 
 
         if (extras != null) {
@@ -260,7 +260,7 @@ class MainActivityViewModel : ViewModel() {
     }
 
     private val _selectedSubs = mutableStateListOf<List<String>>()
-    val selectedSubs: List<List<String>> get() = selectedSubs
+    val selectedSubs: List<List<String>> get() = _selectedSubs
     private fun updateSelectedSubs() {
         _selectedSubs.clear()
         subs.forEach {
