@@ -47,7 +47,7 @@ fun FoodPage(model: FoodPageViewModel) {
         state = rememberSwipeRefreshState(isRefreshing),
         onRefresh = { model.refresh() },
 
-    ) {
+        ) {
         if (model.errorMessage.isEmpty()) {
 
             LazyVerticalGrid(
@@ -60,14 +60,21 @@ fun FoodPage(model: FoodPageViewModel) {
                     )
                     .fillMaxHeight()
                     .fillMaxWidth(),
-                    columns = GridCells.Adaptive(400.dp),
+                columns = GridCells.Adaptive(400.dp),
 
                 ) {
 
                 items(model.food.size) { foodDay ->
 
-                    Column(modifier = Modifier.padding(7.dp)){
-                        FoodCard(foodData = FoodDay(model.food[foodDay][0], model.food[foodDay][1], model.food[foodDay][2], model.food[foodDay][3]))
+                    Column(modifier = Modifier.padding(7.dp)) {
+                        FoodCard(
+                            foodData = FoodDay(
+                                model.food[foodDay][0],
+                                model.food[foodDay][1],
+                                model.food[foodDay][2],
+                                model.food[foodDay][3]
+                            )
+                        )
                     }
 
 

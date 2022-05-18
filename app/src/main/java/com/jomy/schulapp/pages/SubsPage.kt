@@ -127,7 +127,7 @@ fun SubsPage(model: MainActivityViewModel) {
                                 items(model.selectedSubs.size) { sub ->
 
 
-                                    Column (modifier = Modifier.padding(7.dp)){
+                                    Column(modifier = Modifier.padding(7.dp)) {
                                         SubCard(
                                             subData = SubData(
                                                 model.selectedSubs[sub][0],
@@ -139,8 +139,6 @@ fun SubsPage(model: MainActivityViewModel) {
                                                 model.selectedSubs[sub][6]
                                             )
                                         )
-
-
 
 
                                     }

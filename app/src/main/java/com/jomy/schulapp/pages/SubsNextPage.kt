@@ -70,7 +70,6 @@ fun SubsNextPage(model: MainActivityViewModel) {
     }) {
 
 
-
         Column(
 
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -122,7 +121,7 @@ fun SubsNextPage(model: MainActivityViewModel) {
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(it),
-                                    columns = GridCells.Adaptive(300.dp),
+                                columns = GridCells.Adaptive(300.dp),
 
 
                                 ) {
@@ -130,20 +129,18 @@ fun SubsNextPage(model: MainActivityViewModel) {
                                 items(model.tomorrowSelectedSubs.size) { sub ->
 
 
-                                        Column (modifier = Modifier.padding(7.dp)){
-                                            SubCard(
-                                                subData = SubData(
-                                                    model.tomorrowSelectedSubs[sub][0],
-                                                    model.tomorrowSelectedSubs[sub][1],
-                                                    model.tomorrowSelectedSubs[sub][2],
-                                                    model.tomorrowSelectedSubs[sub][3],
-                                                    model.tomorrowSelectedSubs[sub][4],
-                                                    model.tomorrowSelectedSubs[sub][5],
-                                                    model.tomorrowSelectedSubs[sub][6]
-                                                )
+                                    Column(modifier = Modifier.padding(7.dp)) {
+                                        SubCard(
+                                            subData = SubData(
+                                                model.tomorrowSelectedSubs[sub][0],
+                                                model.tomorrowSelectedSubs[sub][1],
+                                                model.tomorrowSelectedSubs[sub][2],
+                                                model.tomorrowSelectedSubs[sub][3],
+                                                model.tomorrowSelectedSubs[sub][4],
+                                                model.tomorrowSelectedSubs[sub][5],
+                                                model.tomorrowSelectedSubs[sub][6]
                                             )
-
-
+                                        )
 
 
                                     }

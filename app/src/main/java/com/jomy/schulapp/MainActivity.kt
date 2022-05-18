@@ -83,11 +83,11 @@ class MainActivity : ComponentActivity() {
 
             val systemUiController = rememberSystemUiController()
 
-            LaunchedEffect(key1 = Unit, block ={
+            LaunchedEffect(key1 = Unit, block = {
                 foodModel.loadFood()
                 model.loadSubs()
                 model.loadSubsNext()
-            } )
+            })
 
 
 
@@ -246,28 +246,31 @@ class MainActivityViewModel : ViewModel() {
         updateTomorrowSelectedSubs()
         updateSelectedSubs()
     }
+
     //#endregion
     private val _tomorrowSelectedSubs = mutableStateListOf<List<String>>()
     val tomorrowSelectedSubs: List<List<String>> get() = _tomorrowSelectedSubs
-    private fun updateTomorrowSelectedSubs(){
+    private fun updateTomorrowSelectedSubs() {
         _tomorrowSelectedSubs.clear()
-        subsnext.forEach{
-            if(it[0] == selectedKlasse){
+        subsnext.forEach {
+            if (it[0] == selectedKlasse) {
                 _tomorrowSelectedSubs.add(it)
             }
         }
     }
+
     private val _selectedSubs = mutableStateListOf<List<String>>()
     val selectedSubs: List<List<String>> get() = selectedSubs
-    private fun updateSelectedSubs(){
+    private fun updateSelectedSubs() {
         _selectedSubs.clear()
-        subs.forEach{
-           if(it[0] == selectedKlasse){
-               _tomorrowSelectedSubs.add(it)
+        subs.forEach {
+            if (it[0] == selectedKlasse) {
+                _tomorrowSelectedSubs.add(it)
             }
         }
     }
-//#region tomorrow
+
+    //#region tomorrow
     private val _subsnext = mutableStateListOf<List<String>>()
     val subsnext: List<List<String>> get() = _subsnext
 
@@ -330,6 +333,7 @@ class MainActivityViewModel : ViewModel() {
             _isRefreshingNext.value = false
         }
     }
+
     //#endregion
     private val _subs = mutableStateListOf<List<String>>()
     val subs: List<List<String>> get() = _subs
