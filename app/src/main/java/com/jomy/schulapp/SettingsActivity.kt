@@ -103,7 +103,6 @@ class SettingsActivity : ComponentActivity() {
                                 .padding(horizontal = 0.dp)
                                 .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface
                         )
-                        PreferencesSwitch(title = "Stundenausfälle", icon = Icons.Rounded.EditNotifications, key = "notifications_entfällt")
                         PreferencesListSelector(
                             list = model.allClasses, key = "notification_class",
                             stringResource(id = R.string.selectclass), isNoteEnabled

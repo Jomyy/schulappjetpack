@@ -88,6 +88,8 @@ class MainActivity : ComponentActivity() {
                 foodModel.loadFood()
                 model.loadSubs()
                 model.loadSubsNext()
+
+
             })
 
 
@@ -139,6 +141,7 @@ class MainActivity : ComponentActivity() {
                         NavigationBarItem(
                             selected = subsSelected.value,
                             onClick = {
+                                model.loadKlasse(context)
                                 navController.navigate("subspage")
                             },
                             label = {
@@ -158,6 +161,7 @@ class MainActivity : ComponentActivity() {
                         NavigationBarItem(
                             selected = subsNextSelected.value,
                             onClick = {
+                                model.loadKlasse(context)
                                 navController.navigate("subsnextpage")
                             },
                             label = {
@@ -240,6 +244,11 @@ class MainActivity : ComponentActivity() {
 class MainActivityViewModel : ViewModel() {
     //#region selectedKlasse
     private val _selectedKlasse = mutableStateOf("")
+    fun loadKlasse(context:Context){
+        _selectedKlasse.value = SettingsUtil.readSetting("selected_class",context)
+        updateTomorrowSelectedSubs()
+        updateSelectedSubs()
+    }
     val selectedKlasse: String get() = _selectedKlasse.value
     fun setKlasse(newKlasse: String, context: Context) {
         _selectedKlasse.value = newKlasse

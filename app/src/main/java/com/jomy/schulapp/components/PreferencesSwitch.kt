@@ -19,7 +19,8 @@ fun PreferencesSwitch(
     title: String,
     icon: ImageVector,
     key: String,
-    onChange: (newKlasse: Boolean) -> Unit = {}
+    onChange: (newKlasse: Boolean) -> Unit = {},
+
 ) {
     val context = LocalContext.current
 

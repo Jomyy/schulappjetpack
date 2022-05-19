@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -106,8 +107,15 @@ fun SubsPage(model: MainActivityViewModel) {
                         } else {
                             LazyVerticalGrid(
                                 modifier = Modifier
+                                    .padding(horizontal = it.calculateRightPadding(
+                                    LayoutDirection.Ltr)).padding(
+                                    top = 0.dp,
+                                    bottom = 0.dp,
+                                    start = 15.dp,
+                                    end = 15.dp
+                                )
                                     .fillMaxSize()
-                                    .padding(it),
+                                    ,
                                 columns = GridCells.Adaptive(300.dp),
 
 
@@ -133,6 +141,11 @@ fun SubsPage(model: MainActivityViewModel) {
                                     }
 
 
+                                }
+                                item{
+                                    Column(modifier = Modifier.padding(vertical = 30.dp)) {
+
+                                    }
                                 }
 
 
