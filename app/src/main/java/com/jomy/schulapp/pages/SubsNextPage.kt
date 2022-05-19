@@ -86,7 +86,7 @@ fun SubsNextPage(model: MainActivityViewModel) {
                 onRefresh = { model.refreshNext() },
             ) {
 
-                if (model.errorMessage.isEmpty()) {
+                if (model.errorMessageNext.isEmpty()) {
                     if (model.subsnext.isNotEmpty()) {
                         if (model.selectedKlasse == "") {
                             Column(

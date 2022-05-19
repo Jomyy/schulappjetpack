@@ -18,6 +18,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -265,7 +266,7 @@ class MainActivityViewModel : ViewModel() {
         _selectedSubs.clear()
         subs.forEach {
             if (it[0] == selectedKlasse) {
-                _tomorrowSelectedSubs.add(it)
+                _selectedSubs.add(it)
             }
         }
     }
@@ -273,7 +274,7 @@ class MainActivityViewModel : ViewModel() {
     //#region tomorrow
     private val _subsnext = mutableStateListOf<List<String>>()
     val subsnext: List<List<String>> get() = _subsnext
-
+    var errorMessageNext: String by mutableStateOf("")
     private val _klassenListeNext = mutableStateListOf<String>()
     private val _isRefreshingNext = MutableStateFlow(false)
 
@@ -289,8 +290,9 @@ class MainActivityViewModel : ViewModel() {
             val apiService = APIService.getInstance()
             try {
                 _subsnext.clear()
-                _subsnext.addAll(apiService.getSubsNext())
                 _klassenListeNext.clear()
+                _subsnext.addAll(apiService.getSubsNext())
+
                 var prevKlasse = ""
                 _subsnext.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
@@ -299,15 +301,16 @@ class MainActivityViewModel : ViewModel() {
                     prevKlasse = stundelist[0]
                 }
             } catch (e: Exception) {
-                errorMessage = e.message.toString()
+                errorMessageNext = e.message.toString()
             }
 
         }
-        Log.d("ERRORFETCH", errorMessage)
+        Log.d("ERRORFETCH", errorMessageNext)
 
     }
 
     fun refreshNext() {
+        errorMessageNext = ""
         _isRefreshingNext.value = true
         viewModelScope.launch {
 
@@ -315,9 +318,10 @@ class MainActivityViewModel : ViewModel() {
             try {
                 delay(300)
                 _subsnext.clear()
+                _klassenListeNext.clear()
                 _subsnext.addAll(apiService.getSubsNext())
 
-                _klassenListeNext.clear()
+
 
                 var prevKlasse = ""
                 _subsnext.forEach { stundelist ->
@@ -326,10 +330,12 @@ class MainActivityViewModel : ViewModel() {
                     }
                     prevKlasse = stundelist[0]
                 }
-                errorMessage = ""
+
             } catch (e: Exception) {
-                errorMessage = e.message.toString()
+                errorMessageNext = e.message.toString()
             }
+            updateTomorrowSelectedSubs()
+            updateSelectedSubs()
             _isRefreshingNext.value = false
         }
     }
@@ -349,12 +355,13 @@ class MainActivityViewModel : ViewModel() {
     fun loadSubs() {
 
         viewModelScope.launch {
-
+            errorMessage = ""
             val apiService = APIService.getInstance()
             try {
                 _subs.clear()
-                _subs.addAll(apiService.getSubs())
                 _klassenListe.clear()
+                _subs.addAll(apiService.getSubs())
+
                 var prevKlasse = ""
                 _subs.forEach { stundelist ->
                     if (stundelist[0] != prevKlasse) {
@@ -372,6 +379,7 @@ class MainActivityViewModel : ViewModel() {
     }
 
     fun refresh() {
+        errorMessage = ""
         _isRefreshing.value = true
         viewModelScope.launch {
 
@@ -379,9 +387,10 @@ class MainActivityViewModel : ViewModel() {
             try {
                 delay(300)
                 _subs.clear()
-                _subs.addAll(apiService.getSubsNext())
-
                 _klassenListe.clear()
+                _subs.addAll(apiService.getSubs())
+
+
 
                 var prevKlasse = ""
                 _subs.forEach { stundelist ->
@@ -394,6 +403,8 @@ class MainActivityViewModel : ViewModel() {
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
+            updateTomorrowSelectedSubs()
+            updateSelectedSubs()
             _isRefreshing.value = false
         }
     }

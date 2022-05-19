@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.EditNotifications
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -102,6 +103,7 @@ class SettingsActivity : ComponentActivity() {
                                 .padding(horizontal = 0.dp)
                                 .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface
                         )
+                        PreferencesSwitch(title = "Stundenausfälle", icon = Icons.Rounded.EditNotifications, key = "notifications_entfällt")
                         PreferencesListSelector(
                             list = model.allClasses, key = "notification_class",
                             stringResource(id = R.string.selectclass), isNoteEnabled
