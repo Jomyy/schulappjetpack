@@ -62,14 +62,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-        if (extras != null) {
-            if (extras.getString("note") != null) {
-                notornot = extras.getString("note")!!
-            }
-            if (extras.getString("klasse") != null) {
-                model.setKlasse(extras.getString("klasse")!!, context = applicationContext)
-            }
-        }
+
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
 
@@ -92,7 +85,14 @@ class MainActivity : ComponentActivity() {
 
             })
 
-
+            if (extras != null) {
+                if (extras.getString("note") != null) {
+                    notornot = extras.getString("note")!!
+                }
+                if (extras.getString("klasse") != null) {
+                    model.setKlasse(extras.getString("klasse")!!, context = applicationContext)
+                }
+            }
 
             SchulAppTheme {
                 val matcolors = MaterialTheme.colorScheme
