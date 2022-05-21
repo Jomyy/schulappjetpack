@@ -3,7 +3,7 @@
 
     <style name="Theme.schulapp" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="windowSplashScreenBackground">@color/material_dynamic_neutral10</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon</item>
 
     </style>
 
