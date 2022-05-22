@@ -22,6 +22,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.dataclasses.FoodDay
+import com.jomy.schulapp.viewModels.FoodViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,9 +31,10 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun FoodPage(model: FoodPageViewModel) {
+fun FoodPage(model: FoodViewModel) {
 
     val isRefreshing by model.isRefreshing.collectAsState()
+
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
@@ -116,49 +118,3 @@ fun FoodPage(model: FoodPageViewModel) {
 
 }
 
-class FoodPageViewModel : ViewModel() {
-    private val _food = mutableStateListOf<List<String>>()
-    val food: List<List<String>> get() = _food
-    private val _isRefreshing = MutableStateFlow(false)
-
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
-
-    var errorMessage: String by mutableStateOf("")
-    fun loadFood() {
-
-        viewModelScope.launch {
-
-            val apiService = APIService.getInstance()
-            try {
-
-                _food.clear()
-                _food.addAll(apiService.getFood())
-
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-
-        }
-
-
-    }
-
-    fun refresh() {
-        _isRefreshing.value = true
-        viewModelScope.launch {
-            delay(300)
-            val apiService = APIService.getInstance()
-
-            errorMessage = try {
-                _food.clear()
-                _food.addAll(apiService.getFood())
-                ""
-            } catch (e: Exception) {
-                e.message.toString()
-            }
-            _isRefreshing.value = false
-        }
-
-    }
-}

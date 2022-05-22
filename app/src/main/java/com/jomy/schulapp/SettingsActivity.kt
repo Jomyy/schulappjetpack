@@ -23,11 +23,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jomy.schulapp.api.APIService
+import com.jomy.schulapp.components.PrefListSelectorViewModel
 import com.jomy.schulapp.components.PreferencesListSelector
 import com.jomy.schulapp.components.PreferencesSwitch
+import com.jomy.schulapp.components.PreferencesSwitchViewModel
 import com.jomy.schulapp.ui.theme.SchulAppTheme
+import com.jomy.schulapp.util.Keys
 import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.WorkerUtil
+import com.jomy.schulapp.viewModels.SettingsViewModel
 import kotlinx.coroutines.launch
 
 
@@ -39,22 +43,21 @@ class SettingsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val model: SettingsActivityViewModel by viewModels()
-
+        val model: SettingsViewModel by viewModels()
+        val notificationSettingModel: PreferencesSwitchViewModel by viewModels()
+        val notificationKlasseModel: PrefListSelectorViewModel by viewModels()
         model.loadClasses()
-        model.getNotKlase(context = applicationContext)
+
         setContent {
+
             val systemUiController = rememberSystemUiController()
 
 
             val context = LocalContext.current
+            LaunchedEffect(key1 = Unit, block = {
+                model.loadSettings(context)
+            })
 
-            var isNoteEnabled by remember {
-
-                mutableStateOf(
-                    SettingsUtil.readSetting("notifications_enabled", context = context).toBoolean()
-                )
-            }
 
             SchulAppTheme {
                 val matcolors = MaterialTheme.colorScheme
@@ -92,10 +95,11 @@ class SettingsActivity : ComponentActivity() {
                         PreferencesSwitch(
                             title = stringResource(id = R.string.pref_note),
                             icon = Icons.Rounded.Notifications,
-                            key = "notifications_enabled",
+                            key = Keys.NOTIFICATIONS_ENABLED,
                             onChange = {
-                                isNoteEnabled = it
-                            }
+                                model.setNotificationActive(context)
+                            },
+                            notificationSettingModel
                         )
                         Divider(
                             Modifier
@@ -104,11 +108,13 @@ class SettingsActivity : ComponentActivity() {
                                 .height(0.dp), color = MaterialTheme.colorScheme.inverseOnSurface
                         )
                         PreferencesListSelector(
-                            list = model.allClasses, key = "notification_class",
-                            stringResource(id = R.string.selectclass), isNoteEnabled
-                        ) {
-                            WorkerUtil.addWorker(context)
-                        }
+                            list = model.allClasses, key = Keys.SELECTED_NOTIFICATION_KLASSE,
+                            stringResource(id = R.string.selectclass), model.isNoteEnabled.value,
+                            model = notificationKlasseModel,
+                            onSelected = {
+
+                            }
+                        )
 
                         Divider(
                             Modifier
@@ -124,35 +130,4 @@ class SettingsActivity : ComponentActivity() {
     }
 }
 
-class SettingsActivityViewModel : ViewModel() {
-    private val _allClasses = mutableListOf<String>()
-    val allClasses: List<String> get() = _allClasses
-    private var errorMessage: String by mutableStateOf("")
-
-    fun loadClasses() {
-        viewModelScope.launch {
-
-            val apiService = APIService.getInstance()
-            try {
-                _allClasses.clear()
-                _allClasses.addAll(apiService.getAllClasses())
-
-
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-
-        }
-
-    }
-
-    private val _selectedNotKlasse = mutableStateOf("")
-
-
-    fun getNotKlase(context: Context) {
-        _selectedNotKlasse.value = SettingsUtil.readSetting("notification_class", context = context)
-
-
-    }
-}
 

@@ -13,7 +13,11 @@ import com.google.gson.reflect.TypeToken
 import com.jomy.schulapp.MainActivity
 import com.jomy.schulapp.R
 import com.jomy.schulapp.api.APIService
+import com.jomy.schulapp.util.Keys
 import com.jomy.schulapp.util.SettingsUtil
+import com.jomy.schulapp.util.SharedPrefsUtil
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileReader
 
@@ -29,13 +33,14 @@ class FetchApiWorker(private val context: Context, workerParams: WorkerParameter
             val gson = Gson()
             val typeToken = object : TypeToken<List<List<String>>>() {}
 
-            var selectedKlasse = ""
+            var selectedKlasse = SharedPrefsUtil.readStringSetting(Keys.SELECTED_NOTIFICATION_KLASSE,context).first()
+
             var before: List<List<String>>
             try {
                 val reader: FileReader = FileReader(context.cacheDir.path + "/" + "classes.json")
                 before = gson.fromJson(reader.readText(), typeToken.type)
 
-                selectedKlasse = SettingsUtil.readSetting("notification_class", context = context)
+
             } catch (e: java.lang.Exception) {
                 before = listOf(listOf(""))
             }
@@ -105,13 +110,14 @@ class FetchApiWorker(private val context: Context, workerParams: WorkerParameter
     }
 
 
-    private fun startForegroundService(klasse: String) {
-
+    private suspend fun startForegroundService(klasse: String) {
+        SharedPrefsUtil.writeStringSetting(Keys.SELECTED_KLASSE,klasse, context = context)
         val notificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val resultIntent =
             Intent(applicationContext, MainActivity::class.java).setAction(Intent.ACTION_MAIN)
-                .putExtra("note", "subsnextpage").putExtra("klasse", klasse)
+                .putExtra("note", "subsnextpage")
+
         val contentIntent =
             PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE)
 

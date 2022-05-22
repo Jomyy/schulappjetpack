@@ -17,20 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jomy.schulapp.dataclasses.FoodDay
 import com.jomy.schulapp.util.SettingsUtil
+import com.jomy.schulapp.util.SharedPrefsUtil
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodCard(foodData: FoodDay) {
     val ctx = LocalContext.current
-    var contentVisible by remember {
-        mutableStateOf(
-            SettingsUtil.readSetting(
-                foodData.day + "_open",
-                context = ctx
-            ).toBoolean()
-        )
-    }
-
 
     Card(
 
@@ -42,101 +36,59 @@ fun FoodCard(foodData: FoodDay) {
                 shape = MaterialTheme.shapes.large
             )
             .fillMaxWidth(),
-        onClick = {
-            contentVisible = !contentVisible
 
-            SettingsUtil.writeSetting(
-                foodData.day + "_open",
-                context = ctx,
-                newSetting = contentVisible.toString()
-            )
-        },
         colors = CardDefaults.outlinedCardColors()
     ) {
-        Column(
-            modifier = Modifier.padding(vertical = 10.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
 
+
+
+
+            Column(
+                modifier = Modifier.padding(20.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
                 Text(
-                    foodData.day, modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .weight(1f),
+                    foodData.day,
                     fontSize = 19.sp
                 )
+                Divider(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 0.dp)
+                        .height(0.dp)
+                        .fillMaxWidth()
+                )
+                Text(
+                    foodData.firstMeal,
 
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Divider(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .height(0.dp)
+                        .fillMaxWidth(.5f)
+                )
 
+                Text(
+                    foodData.secondMeal,
 
-                IconButton(onClick = {
-                    contentVisible = !contentVisible
-                    SettingsUtil.writeSetting(
-                        foodData.day + "_open",
-                        context = ctx,
-                        newSetting = contentVisible.toString()
-                    )
-                }, modifier = Modifier.padding(horizontal = 10.dp)) {
-                    Crossfade(targetState = contentVisible) {
-                        if (it) {
-                            Icon(Icons.Rounded.ArrowDropUp, "Arrow")
-                        } else {
-                            Icon(Icons.Rounded.ArrowDropDown, "Arrow")
-                        }
-                    }
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Divider(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .height(0.dp)
+                        .fillMaxWidth(.5f)
+                )
 
+                Text(
+                    foodData.thirdMeal,
 
-                }
-            }
-
-            AnimatedVisibility(
-                visible = contentVisible,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            ) {
-
-                Column(
-
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Divider(
-                        modifier = Modifier
-                            .padding(top = 10.dp, bottom = 0.dp)
-                            .height(0.dp)
-                            .fillMaxWidth()
-                    )
-                    Text(
-                        foodData.firstMeal,
-
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Divider(
-                        modifier = Modifier
-                            .padding(top = 10.dp, bottom = 10.dp)
-                            .height(0.dp)
-                            .fillMaxWidth(.5f)
-                    )
-
-                    Text(
-                        foodData.secondMeal,
-
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Divider(
-                        modifier = Modifier
-                            .padding(top = 10.dp, bottom = 10.dp)
-                            .height(0.dp)
-                            .fillMaxWidth(.5f)
-                    )
-
-                    Text(
-                        foodData.thirdMeal,
-
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
 
 
-        }
 
     }
 

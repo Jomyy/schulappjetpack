@@ -3,6 +3,7 @@ package com.jomy.schulapp.pages
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
@@ -21,19 +22,25 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
-import com.jomy.schulapp.MainActivityViewModel
 import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.components.SubCard
 import com.jomy.schulapp.dataclasses.SubData
+import com.jomy.schulapp.viewModels.SubsViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsPage(model: MainActivityViewModel) {
+fun SubsPage(model: SubsViewModel) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
     val context = LocalContext.current
+    LaunchedEffect(key1 = Unit, block = {
+
+        model.loadSelectedKlasse(context)
+
+    })
+
     Scaffold(bottomBar = {
         Column(
             modifier = Modifier
@@ -47,8 +54,8 @@ fun SubsPage(model: MainActivityViewModel) {
                     .fillMaxWidth(.9f)
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
-                if (model.selectedKlasse != "") {
-                    Text(stringResource(id = R.string.selectedclass) + model.selectedKlasse)
+                if (model.selectedKlasse.value != "") {
+                    Text(stringResource(id = R.string.selectedclass) + model.selectedKlasse.value)
                 } else {
                     Text(stringResource(id = R.string.selectclass))
                 }
@@ -75,45 +82,51 @@ fun SubsPage(model: MainActivityViewModel) {
                     },
 
                     onPositiveClick = { newklasse ->
-                        model.setKlasse(newKlasse = newklasse, context = context)
+                        model.setSelectedKlasse(newKlasse = newklasse, context = context)
                         showSelector = !showSelector
 
                     },
-                    klassen = model.klassenListe,
-                    oldSelection = model.selectedKlasse
+                    klassen = model.allKlassen,
+                    oldSelection = model.selectedKlasse.value
                 )
             }
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing),
-                onRefresh = { model.refresh() },
+                onRefresh = { model.loadSubs() },
             ) {
-                if (model.errorMessage.isEmpty()) {
-                    if (model.subs.isNotEmpty()) {
-                        if (model.selectedKlasse == "") {
-                            Column(
+                if (model.errorMessage.value.isEmpty()) {
+                    if (model.allSubs.isNotEmpty()) {
+                        if (model.selectedKlasse.value == "") {
+                            LazyColumn(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .fillMaxWidth()
-                                    .verticalScroll(rememberScrollState()),
+                                    .fillMaxWidth(),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                Text(
-                                    stringResource(id = R.string.plsselectclass),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    textAlign = TextAlign.Center
-                                )
+                                item{
+                                    Text(
+                                        stringResource(id = R.string.plsselectclass),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+
                             }
                         } else {
                             LazyVerticalGrid(
                                 modifier = Modifier
-                                    .padding(horizontal = it.calculateRightPadding(
-                                    LayoutDirection.Ltr)).padding(
-                                    top = 0.dp,
-                                    bottom = 0.dp,
-                                    start = 15.dp,
-                                    end = 15.dp
-                                )
+                                    .padding(
+                                        horizontal = it.calculateRightPadding(
+                                            LayoutDirection.Ltr
+                                        )
+                                    )
+                                    .padding(
+                                        top = 0.dp,
+                                        bottom = 0.dp,
+                                        start = 15.dp,
+                                        end = 15.dp
+                                    )
                                     .fillMaxSize()
                                     ,
                                 columns = GridCells.Adaptive(300.dp),
@@ -152,48 +165,53 @@ fun SubsPage(model: MainActivityViewModel) {
                             }
                         }
 
-                    } else if (!model.isRefreshing.collectAsState().value) {
-                        Column(
+                    } else {
+                        LazyColumn(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .fillMaxWidth()
-                                .verticalScroll(rememberScrollState()),
+                                ,
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                stringResource(id = R.string.noSubs),
-                                style = MaterialTheme.typography.titleMedium,
-                                textAlign = TextAlign.Center
-                            )
+                            item{
+                                Text(
+                                    stringResource(id = R.string.noSubs),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+
                         }
                     }
 
 
                 } else {
-                    Column(
+                    LazyColumn(
                         Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .verticalScroll(rememberScrollState())
                             .padding(horizontal = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Icon(
-                            Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
-                            "WifiOff",
-                            modifier = Modifier.size(45.dp),
-                        )
-                        Text(
-                            stringResource(id = R.string.serverNotOn),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.headlineSmall
-                        )
+                        item{
+                            Icon(
+                                Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
+                                "WifiOff",
+                                modifier = Modifier.size(45.dp),
+                            )
+                            Text(
+                                stringResource(id = R.string.serverNotOn),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.headlineSmall
+                            )
 
-                        TextButton(onClick = { model.refresh() }) {
-                            Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                            TextButton(onClick = { model.loadSubs() }) {
+                                Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                            }
                         }
+
                     }
 
                 }

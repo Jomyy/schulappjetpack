@@ -19,7 +19,7 @@ class SchulApplication : Application() {
         notificationManager.createNotificationChannel(channel)
 
 
-        WorkerUtil.addWorker(applicationContext)
+
         notificationManager.cancelAll()
     }
 

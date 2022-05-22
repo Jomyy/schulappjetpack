@@ -1,7 +1,9 @@
 package com.jomy.schulapp.pages
 
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
@@ -20,19 +22,25 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
-import com.jomy.schulapp.MainActivityViewModel
 import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.components.SubCard
 import com.jomy.schulapp.dataclasses.SubData
+import com.jomy.schulapp.viewModels.SubsNextViewModel
+
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsNextPage(model: MainActivityViewModel) {
+fun SubsNextPage(model: SubsNextViewModel) {
     var showSelector by remember { mutableStateOf(false) }
-    val isRefreshing by model.isRefreshingNext.collectAsState()
+    val isRefreshing by model.isRefreshing.collectAsState()
     val context = LocalContext.current
+    LaunchedEffect(key1 = Unit, block = {
+
+        model.loadSelectedKlasse(context)
+
+    })
 
     Scaffold(bottomBar = {
         Column(
@@ -47,11 +55,12 @@ fun SubsNextPage(model: MainActivityViewModel) {
                     .fillMaxWidth(.9f)
                     .fillMaxHeight(.9f), colors = ButtonDefaults.elevatedButtonColors()
             ) {
-                if (model.selectedKlasse != "") {
-                    Text(stringResource(id = R.string.selectedclass) + model.selectedKlasse)
+                if (model.selectedKlasse.value != "") {
+                    Text(stringResource(id = R.string.selectedclass) + model.selectedKlasse.value)
                 } else {
                     Text(stringResource(id = R.string.selectclass))
                 }
+
             }
         }
 
@@ -62,7 +71,8 @@ fun SubsNextPage(model: MainActivityViewModel) {
 
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxHeight()
+                .fillMaxWidth()
 
         ) {
             if (showSelector) {
@@ -73,65 +83,72 @@ fun SubsNextPage(model: MainActivityViewModel) {
                     },
 
                     onPositiveClick = { newklasse ->
-                        model.setKlasse(newKlasse = newklasse, context = context)
+                        model.setSelectedKlasse(newKlasse = newklasse, context = context)
                         showSelector = !showSelector
 
                     },
-                    klassen = model.klassenListeNext,
-                    oldSelection = model.selectedKlasse
-
+                    klassen = model.allKlassen,
+                    oldSelection = model.selectedKlasse.value
                 )
             }
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing),
-                onRefresh = { model.refreshNext() },
+                onRefresh = { model.loadSubs() },
             ) {
-
-                if (model.errorMessageNext.isEmpty()) {
-                    if (model.subsnext.isNotEmpty()) {
-                        if (model.selectedKlasse == "") {
-                            Column(
+                if (model.errorMessage.value.isEmpty()) {
+                    if (model.allSubs.isNotEmpty()) {
+                        if (model.selectedKlasse.value == "") {
+                            LazyColumn(
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .fillMaxWidth()
-                                    .verticalScroll(rememberScrollState()),
+                                    ,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                Text(
-                                    stringResource(id = R.string.plsselectclass),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    textAlign = TextAlign.Center
-                                )
+                                item{
+                                    Text(
+                                        stringResource(id = R.string.plsselectclass),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+
                             }
                         } else {
                             LazyVerticalGrid(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = it.calculateRightPadding(LayoutDirection.Ltr)).padding(
+                                    .padding(
+                                        horizontal = it.calculateRightPadding(
+                                            LayoutDirection.Ltr
+                                        )
+                                    )
+                                    .padding(
                                         top = 0.dp,
                                         bottom = 0.dp,
                                         start = 15.dp,
                                         end = 15.dp
-                                    ),
+                                    )
+                                    .fillMaxSize()
+                                ,
                                 columns = GridCells.Adaptive(300.dp),
 
 
                                 ) {
 
-                                items(model.tomorrowSelectedSubs.size) { sub ->
+                                items(model.selectedSubs.size) { sub ->
 
 
                                     Column(modifier = Modifier.padding(7.dp)) {
                                         SubCard(
                                             subData = SubData(
-                                                model.tomorrowSelectedSubs[sub][0],
-                                                model.tomorrowSelectedSubs[sub][1],
-                                                model.tomorrowSelectedSubs[sub][2],
-                                                model.tomorrowSelectedSubs[sub][3],
-                                                model.tomorrowSelectedSubs[sub][4],
-                                                model.tomorrowSelectedSubs[sub][5],
-                                                model.tomorrowSelectedSubs[sub][6]
+                                                model.selectedSubs[sub][0],
+                                                model.selectedSubs[sub][1],
+                                                model.selectedSubs[sub][2],
+                                                model.selectedSubs[sub][3],
+                                                model.selectedSubs[sub][4],
+                                                model.selectedSubs[sub][5],
+                                                model.selectedSubs[sub][6]
                                             )
                                         )
 
@@ -142,62 +159,71 @@ fun SubsNextPage(model: MainActivityViewModel) {
                                 }
                                 item{
                                     Column(modifier = Modifier.padding(vertical = 30.dp)) {
-                                        
+
                                     }
                                 }
+
 
                             }
                         }
 
-                    } else if (!model.isRefreshingNext.collectAsState().value) {
-                        Column(
+                    } else {
+                        LazyColumn(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .fillMaxWidth()
-                                .verticalScroll(rememberScrollState()),
+                                ,
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                stringResource(id = R.string.noSubs),
-                                style = MaterialTheme.typography.titleMedium,
-                                textAlign = TextAlign.Center
-                            )
+                            item{
+                                Text(
+                                    stringResource(id = R.string.noSubs),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+
                         }
                     }
 
 
                 } else {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
+                    LazyColumn(
+                        Modifier
                             .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
+                            .fillMaxHeight()
+
                             .padding(horizontal = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Icon(
-                            Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
-                            "WifiOff",
-                            modifier = Modifier.size(45.dp),
-                        )
-                        Text(
-                            stringResource(id = R.string.serverNotOn),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.headlineSmall
-                        )
+                        item {
+                            Icon(
+                                Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
+                                "WifiOff",
+                                modifier = Modifier.size(45.dp),
+                            )
+                            Text(
+                                stringResource(id = R.string.serverNotOn),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.headlineSmall
+                            )
 
-                        TextButton(onClick = { model.refreshNext() }) {
-                            Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                            TextButton(onClick = { model.loadSubs() }) {
+                                Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                            }
                         }
+
                     }
 
                 }
 
             }
-
-
         }
+
+
     }
 }
+
+

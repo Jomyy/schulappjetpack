@@ -36,12 +36,18 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.SchulAppTheme
+import com.jomy.schulapp.util.Keys
 import com.jomy.schulapp.util.SettingsUtil
+import com.jomy.schulapp.util.SharedPrefsUtil
 import com.jomy.schulapp.util.WorkerUtil
+import com.jomy.schulapp.viewModels.FoodViewModel
+import com.jomy.schulapp.viewModels.SubsNextViewModel
+import com.jomy.schulapp.viewModels.SubsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -57,10 +63,10 @@ class MainActivity : ComponentActivity() {
         var notornot = "foodpage"
 
 
-        val model: MainActivityViewModel by viewModels()
-        val foodModel: FoodPageViewModel by viewModels()
 
-
+        val foodModel: FoodViewModel by viewModels()
+        val subsModel: SubsViewModel by viewModels()
+        val subsNextModel: SubsNextViewModel by viewModels()
 
 
         WindowCompat.setDecorFitsSystemWindows(window, true)
@@ -73,24 +79,21 @@ class MainActivity : ComponentActivity() {
             val subsSelected = rememberSaveable { mutableStateOf(false) }
             val subsNextSelected = rememberSaveable { mutableStateOf(false) }
 
-            WorkerUtil.addWorker(context)
-
             val systemUiController = rememberSystemUiController()
 
             LaunchedEffect(key1 = Unit, block = {
+                WorkerUtil.addWorker(context,!SharedPrefsUtil.readBooleanSetting(Keys.NOTIFICATIONS_ENABLED,context).first())
                 foodModel.loadFood()
-                model.loadSubs()
-                model.loadSubsNext()
+                subsModel.loadSubs()
+                subsNextModel.loadSubs()
 
 
             })
 
+
             if (extras != null) {
                 if (extras.getString("note") != null) {
                     notornot = extras.getString("note")!!
-                }
-                if (extras.getString("klasse") != null) {
-                    model.setKlasse(extras.getString("klasse")!!, context = applicationContext)
                 }
             }
 
@@ -141,7 +144,7 @@ class MainActivity : ComponentActivity() {
                         NavigationBarItem(
                             selected = subsSelected.value,
                             onClick = {
-                                model.loadKlasse(context)
+
                                 navController.navigate("subspage")
                             },
                             label = {
@@ -161,7 +164,6 @@ class MainActivity : ComponentActivity() {
                         NavigationBarItem(
                             selected = subsNextSelected.value,
                             onClick = {
-                                model.loadKlasse(context)
                                 navController.navigate("subsnextpage")
                             },
                             label = {
@@ -191,14 +193,14 @@ class MainActivity : ComponentActivity() {
 
                             }
                             composable("subspage") {
-                                SubsPage(model)
+                                SubsPage(subsModel)
                                 foodSelected.value = false
                                 subsSelected.value = true
                                 subsNextSelected.value = false
 
                             }
                             composable("subsnextpage") {
-                                SubsNextPage(model)
+                                SubsNextPage(subsNextModel)
                                 foodSelected.value = false
                                 subsSelected.value = false
                                 subsNextSelected.value = true
@@ -238,185 +240,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-}
-
-
-class MainActivityViewModel : ViewModel() {
-    //#region selectedKlasse
-    private val _selectedKlasse = mutableStateOf("")
-    fun loadKlasse(context:Context){
-        _selectedKlasse.value = SettingsUtil.readSetting("selected_class",context)
-        updateTomorrowSelectedSubs()
-        updateSelectedSubs()
-    }
-    val selectedKlasse: String get() = _selectedKlasse.value
-    fun setKlasse(newKlasse: String, context: Context) {
-        _selectedKlasse.value = newKlasse
-        SettingsUtil.writeSetting("selected_class", newKlasse, context)
-        updateTomorrowSelectedSubs()
-        updateSelectedSubs()
-    }
-
-    //#endregion
-    private val _tomorrowSelectedSubs = mutableStateListOf<List<String>>()
-    val tomorrowSelectedSubs: List<List<String>> get() = _tomorrowSelectedSubs
-    private fun updateTomorrowSelectedSubs() {
-        _tomorrowSelectedSubs.clear()
-        subsnext.forEach {
-            if (it[0] == selectedKlasse) {
-                _tomorrowSelectedSubs.add(it)
-            }
-        }
-    }
-
-    private val _selectedSubs = mutableStateListOf<List<String>>()
-    val selectedSubs: List<List<String>> get() = _selectedSubs
-    private fun updateSelectedSubs() {
-        _selectedSubs.clear()
-        subs.forEach {
-            if (it[0] == selectedKlasse) {
-                _selectedSubs.add(it)
-            }
-        }
-    }
-
-    //#region tomorrow
-    private val _subsnext = mutableStateListOf<List<String>>()
-    val subsnext: List<List<String>> get() = _subsnext
-    var errorMessageNext: String by mutableStateOf("")
-    private val _klassenListeNext = mutableStateListOf<String>()
-    private val _isRefreshingNext = MutableStateFlow(false)
-
-    val isRefreshingNext: StateFlow<Boolean>
-        get() = _isRefreshingNext.asStateFlow()
-    val klassenListeNext: List<String> get() = _klassenListeNext
-
-
-    fun loadSubsNext() {
-
-        viewModelScope.launch {
-
-            val apiService = APIService.getInstance()
-            try {
-                _subsnext.clear()
-                _klassenListeNext.clear()
-                _subsnext.addAll(apiService.getSubsNext())
-
-                var prevKlasse = ""
-                _subsnext.forEach { stundelist ->
-                    if (stundelist[0] != prevKlasse) {
-                        _klassenListeNext.add(stundelist[0])
-                    }
-                    prevKlasse = stundelist[0]
-                }
-            } catch (e: Exception) {
-                errorMessageNext = e.message.toString()
-            }
-
-        }
-        Log.d("ERRORFETCH", errorMessageNext)
-
-    }
-
-    fun refreshNext() {
-        errorMessageNext = ""
-        _isRefreshingNext.value = true
-        viewModelScope.launch {
-
-            val apiService = APIService.getInstance()
-            try {
-                delay(300)
-                _subsnext.clear()
-                _klassenListeNext.clear()
-                _subsnext.addAll(apiService.getSubsNext())
-
-
-
-                var prevKlasse = ""
-                _subsnext.forEach { stundelist ->
-                    if (stundelist[0] != prevKlasse) {
-                        _klassenListeNext.add(stundelist[0])
-                    }
-                    prevKlasse = stundelist[0]
-                }
-
-            } catch (e: Exception) {
-                errorMessageNext = e.message.toString()
-            }
-            updateTomorrowSelectedSubs()
-            updateSelectedSubs()
-            _isRefreshingNext.value = false
-        }
-    }
-
-    //#endregion
-    private val _subs = mutableStateListOf<List<String>>()
-    val subs: List<List<String>> get() = _subs
-
-    private val _klassenListe = mutableStateListOf<String>()
-    private val _isRefreshing = MutableStateFlow(false)
-
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
-    val klassenListe: List<String> get() = _klassenListe
-
-    var errorMessage: String by mutableStateOf("")
-    fun loadSubs() {
-
-        viewModelScope.launch {
-            errorMessage = ""
-            val apiService = APIService.getInstance()
-            try {
-                _subs.clear()
-                _klassenListe.clear()
-                _subs.addAll(apiService.getSubs())
-
-                var prevKlasse = ""
-                _subs.forEach { stundelist ->
-                    if (stundelist[0] != prevKlasse) {
-                        _klassenListe.add(stundelist[0])
-                    }
-                    prevKlasse = stundelist[0]
-                }
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-
-        }
-        Log.d("ERRORFETCH", errorMessage)
-
-    }
-
-    fun refresh() {
-        errorMessage = ""
-        _isRefreshing.value = true
-        viewModelScope.launch {
-
-            val apiService = APIService.getInstance()
-            try {
-                delay(300)
-                _subs.clear()
-                _klassenListe.clear()
-                _subs.addAll(apiService.getSubs())
-
-
-
-                var prevKlasse = ""
-                _subs.forEach { stundelist ->
-                    if (stundelist[0] != prevKlasse) {
-                        _klassenListe.add(stundelist[0])
-                    }
-                    prevKlasse = stundelist[0]
-                }
-                errorMessage = ""
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-            updateTomorrowSelectedSubs()
-            updateSelectedSubs()
-            _isRefreshing.value = false
-        }
-    }
 }
 
 
