@@ -1,7 +1,6 @@
 package com.jomy.schulapp
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.EditNotifications
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,20 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.components.PrefListSelectorViewModel
 import com.jomy.schulapp.components.PreferencesListSelector
 import com.jomy.schulapp.components.PreferencesSwitch
 import com.jomy.schulapp.components.PreferencesSwitchViewModel
 import com.jomy.schulapp.ui.theme.SchulAppTheme
 import com.jomy.schulapp.util.Keys
-import com.jomy.schulapp.util.SettingsUtil
-import com.jomy.schulapp.util.WorkerUtil
 import com.jomy.schulapp.viewModels.SettingsViewModel
-import kotlinx.coroutines.launch
 
 
 class SettingsActivity : ComponentActivity() {

@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.SharedPrefsUtil
 import kotlinx.coroutines.launch
 

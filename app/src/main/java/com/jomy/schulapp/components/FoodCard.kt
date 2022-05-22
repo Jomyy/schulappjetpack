@@ -1,31 +1,19 @@
 package com.jomy.schulapp.components
 
-
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.ArrowDropUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jomy.schulapp.dataclasses.FoodDay
-import com.jomy.schulapp.util.SettingsUtil
-import com.jomy.schulapp.util.SharedPrefsUtil
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodCard(foodData: FoodDay) {
-    val ctx = LocalContext.current
-
     Card(
 
         shape = MaterialTheme.shapes.large,

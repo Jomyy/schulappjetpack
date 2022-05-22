@@ -1,11 +1,8 @@
 package com.jomy.schulapp
 
-
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -27,28 +24,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.pages.*
 import com.jomy.schulapp.ui.theme.SchulAppTheme
 import com.jomy.schulapp.util.Keys
-import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.SharedPrefsUtil
 import com.jomy.schulapp.util.WorkerUtil
 import com.jomy.schulapp.viewModels.FoodViewModel
 import com.jomy.schulapp.viewModels.SubsNextViewModel
 import com.jomy.schulapp.viewModels.SubsViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {

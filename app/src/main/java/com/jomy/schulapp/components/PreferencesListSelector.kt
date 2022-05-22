@@ -12,9 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.SharedPrefsUtil
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 

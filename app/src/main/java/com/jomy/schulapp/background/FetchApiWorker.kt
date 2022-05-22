@@ -14,10 +14,8 @@ import com.jomy.schulapp.MainActivity
 import com.jomy.schulapp.R
 import com.jomy.schulapp.api.APIService
 import com.jomy.schulapp.util.Keys
-import com.jomy.schulapp.util.SettingsUtil
 import com.jomy.schulapp.util.SharedPrefsUtil
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileReader
 
