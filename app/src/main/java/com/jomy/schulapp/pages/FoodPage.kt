@@ -20,16 +20,26 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jomy.schulapp.R
 import com.jomy.schulapp.dataclasses.FoodDay
 import com.jomy.schulapp.viewModels.FoodViewModel
+import com.jomy.schulapp.viewModels.SubsNextViewModel
+import com.jomy.schulapp.viewModels.SubsViewModel
 
 @Composable
-fun FoodPage(model: FoodViewModel) {
+fun FoodPage(
+    model: FoodViewModel,
+    subsViewModel: SubsViewModel,
+    subsNextViewModel: SubsNextViewModel
+) {
 
     val isRefreshing by model.isRefreshing.collectAsState()
 
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = { model.refresh() },
+        onRefresh = {
+            model.refresh()
+            subsViewModel.loadSubs()
+            subsNextViewModel.loadSubs()
+        },
 
         ) {
         if (model.errorMessage.isEmpty()) {
@@ -99,7 +109,11 @@ fun FoodPage(model: FoodViewModel) {
                     style = MaterialTheme.typography.headlineSmall
                 )
 
-                TextButton(onClick = { model.refresh() }) {
+                TextButton(onClick = {
+                    model.refresh()
+                    subsViewModel.loadSubs()
+                    subsNextViewModel.loadSubs()
+                }) {
                     Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
                 }
             }

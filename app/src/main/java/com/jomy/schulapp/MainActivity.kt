@@ -175,21 +175,21 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(navController = navController, startDestination = notornot) {
                             composable("foodpage") {
-                                FoodPage(foodModel)
+                                FoodPage(foodModel,subsModel,subsNextModel)
                                 foodSelected.value = true
                                 subsSelected.value = false
                                 subsNextSelected.value = false
 
                             }
                             composable("subspage") {
-                                SubsPage(subsModel)
+                                SubsPage(subsModel,foodModel,subsNextModel)
                                 foodSelected.value = false
                                 subsSelected.value = true
                                 subsNextSelected.value = false
 
                             }
                             composable("subsnextpage") {
-                                SubsNextPage(subsNextModel)
+                                SubsNextPage(subsNextModel,foodModel,subsModel)
                                 foodSelected.value = false
                                 subsSelected.value = false
                                 subsNextSelected.value = true

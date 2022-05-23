@@ -23,13 +23,19 @@ import com.jomy.schulapp.R
 import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.components.SubCard
 import com.jomy.schulapp.dataclasses.SubData
+import com.jomy.schulapp.viewModels.FoodViewModel
 import com.jomy.schulapp.viewModels.SubsNextViewModel
+import com.jomy.schulapp.viewModels.SubsViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubsNextPage(model: SubsNextViewModel) {
+fun SubsNextPage(
+    model: SubsNextViewModel,
+    foodViewModel: FoodViewModel,
+    subsViewModel: SubsViewModel
+) {
     var showSelector by remember { mutableStateOf(false) }
     val isRefreshing by model.isRefreshing.collectAsState()
     val context = LocalContext.current
@@ -90,7 +96,11 @@ fun SubsNextPage(model: SubsNextViewModel) {
             }
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing),
-                onRefresh = { model.loadSubs() },
+                onRefresh = {
+                    model.loadSubs()
+                    foodViewModel.refresh()
+                    subsViewModel.loadSubs()
+                },
             ) {
                 if (model.errorMessage.value.isEmpty()) {
                     if (model.allSubs.isNotEmpty()) {
@@ -204,7 +214,11 @@ fun SubsNextPage(model: SubsNextViewModel) {
                                 style = MaterialTheme.typography.headlineSmall
                             )
 
-                            TextButton(onClick = { model.loadSubs() }) {
+                            TextButton(onClick = {
+                                model.loadSubs()
+                                foodViewModel.refresh()
+                                subsViewModel.loadSubs()
+                            }) {
                                 Text(
                                     "Erneut Versuchen",
                                     style = MaterialTheme.typography.labelLarge
