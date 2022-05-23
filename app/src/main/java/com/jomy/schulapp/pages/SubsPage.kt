@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
 import androidx.compose.material3.*
@@ -104,7 +102,7 @@ fun SubsPage(model: SubsViewModel) {
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                item{
+                                item {
                                     Text(
                                         stringResource(id = R.string.plsselectclass),
                                         style = MaterialTheme.typography.titleMedium,
@@ -127,8 +125,7 @@ fun SubsPage(model: SubsViewModel) {
                                         start = 15.dp,
                                         end = 15.dp
                                     )
-                                    .fillMaxSize()
-                                    ,
+                                    .fillMaxSize(),
                                 columns = GridCells.Adaptive(300.dp),
 
 
@@ -155,7 +152,7 @@ fun SubsPage(model: SubsViewModel) {
 
 
                                 }
-                                item{
+                                item {
                                     Column(modifier = Modifier.padding(vertical = 30.dp)) {
 
                                     }
@@ -169,12 +166,11 @@ fun SubsPage(model: SubsViewModel) {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .fillMaxWidth()
-                                ,
+                                .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            item{
+                            item {
                                 Text(
                                     stringResource(id = R.string.noSubs),
                                     style = MaterialTheme.typography.titleMedium,
@@ -195,7 +191,7 @@ fun SubsPage(model: SubsViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        item{
+                        item {
                             Icon(
                                 Icons.Rounded.SignalWifiStatusbarConnectedNoInternet4,
                                 "WifiOff",
@@ -208,7 +204,10 @@ fun SubsPage(model: SubsViewModel) {
                             )
 
                             TextButton(onClick = { model.loadSubs() }) {
-                                Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                                Text(
+                                    "Erneut Versuchen",
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                         }
 

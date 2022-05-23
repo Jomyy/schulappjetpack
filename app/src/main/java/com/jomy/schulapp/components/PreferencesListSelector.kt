@@ -23,12 +23,12 @@ fun PreferencesListSelector(
     textToShow: String,
     isEnabledAll: Boolean = true,
     onSelected: (newSelection: String) -> Unit = {},
-    model:PrefListSelectorViewModel
+    model: PrefListSelectorViewModel
 ) {
     var showSelector by remember { mutableStateOf(false) }
     val context = LocalContext.current
     LaunchedEffect(key1 = Unit, block = {
-        model.readValue(key,context)
+        model.readValue(key, context)
     })
 
 
@@ -61,7 +61,7 @@ fun PreferencesListSelector(
 
             onPositiveClick = { newklasse ->
 
-                model.setNewValue(key,newklasse,context)
+                model.setNewValue(key, newklasse, context)
                 showSelector = !showSelector
                 onSelected(newklasse)
             },
@@ -71,18 +71,20 @@ fun PreferencesListSelector(
         )
     }
 }
-class PrefListSelectorViewModel : ViewModel(){
+
+class PrefListSelectorViewModel : ViewModel() {
     private var _selectedValue = mutableStateOf("")
     val selectedValue get() = _selectedValue
-    fun setNewValue(key:String,newVal:String,context: Context){
+    fun setNewValue(key: String, newVal: String, context: Context) {
         viewModelScope.launch {
-            SharedPrefsUtil.writeStringSetting(key,newVal,context)
-            readValue(key,context)
+            SharedPrefsUtil.writeStringSetting(key, newVal, context)
+            readValue(key, context)
         }
     }
-    fun readValue(key:String,context:Context){
+
+    fun readValue(key: String, context: Context) {
         viewModelScope.launch {
-            SharedPrefsUtil.readStringSetting(key,context).collect{
+            SharedPrefsUtil.readStringSetting(key, context).collect {
                 _selectedValue.value = it
             }
         }

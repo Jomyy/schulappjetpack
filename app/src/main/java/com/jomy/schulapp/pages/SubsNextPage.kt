@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SignalWifiStatusbarConnectedNoInternet4
 import androidx.compose.material3.*
@@ -26,7 +24,6 @@ import com.jomy.schulapp.components.SelectorDialog
 import com.jomy.schulapp.components.SubCard
 import com.jomy.schulapp.dataclasses.SubData
 import com.jomy.schulapp.viewModels.SubsNextViewModel
-
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -101,12 +98,11 @@ fun SubsNextPage(model: SubsNextViewModel) {
                             LazyColumn(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .fillMaxWidth()
-                                    ,
+                                    .fillMaxWidth(),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                item{
+                                item {
                                     Text(
                                         stringResource(id = R.string.plsselectclass),
                                         style = MaterialTheme.typography.titleMedium,
@@ -129,8 +125,7 @@ fun SubsNextPage(model: SubsNextViewModel) {
                                         start = 15.dp,
                                         end = 15.dp
                                     )
-                                    .fillMaxSize()
-                                ,
+                                    .fillMaxSize(),
                                 columns = GridCells.Adaptive(300.dp),
 
 
@@ -157,7 +152,7 @@ fun SubsNextPage(model: SubsNextViewModel) {
 
 
                                 }
-                                item{
+                                item {
                                     Column(modifier = Modifier.padding(vertical = 30.dp)) {
 
                                     }
@@ -171,12 +166,11 @@ fun SubsNextPage(model: SubsNextViewModel) {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .fillMaxWidth()
-                                ,
+                                .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            item{
+                            item {
                                 Text(
                                     stringResource(id = R.string.noSubs),
                                     style = MaterialTheme.typography.titleMedium,
@@ -211,7 +205,10 @@ fun SubsNextPage(model: SubsNextViewModel) {
                             )
 
                             TextButton(onClick = { model.loadSubs() }) {
-                                Text("Erneut Versuchen", style = MaterialTheme.typography.labelLarge)
+                                Text(
+                                    "Erneut Versuchen",
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                         }
 

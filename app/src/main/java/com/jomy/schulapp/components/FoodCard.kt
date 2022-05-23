@@ -29,53 +29,50 @@ fun FoodCard(foodData: FoodDay) {
     ) {
 
 
+        Column(
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                foodData.day,
+                fontSize = 19.sp
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 0.dp)
+                    .height(0.dp)
+                    .fillMaxWidth()
+            )
+            Text(
+                foodData.firstMeal,
 
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.dp)
+                    .fillMaxWidth(.5f)
+            )
 
-            Column(
-                modifier = Modifier.padding(20.dp),
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    foodData.day,
-                    fontSize = 19.sp
-                )
-                Divider(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 0.dp)
-                        .height(0.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    foodData.firstMeal,
+            Text(
+                foodData.secondMeal,
 
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Divider(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp)
-                        .height(0.dp)
-                        .fillMaxWidth(.5f)
-                )
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .height(0.dp)
+                    .fillMaxWidth(.5f)
+            )
 
-                Text(
-                    foodData.secondMeal,
+            Text(
+                foodData.thirdMeal,
 
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Divider(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp)
-                        .height(0.dp)
-                        .fillMaxWidth(.5f)
-                )
-
-                Text(
-                    foodData.thirdMeal,
-
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
 
 
     }

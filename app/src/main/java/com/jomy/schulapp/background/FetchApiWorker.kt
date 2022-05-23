@@ -31,16 +31,17 @@ class FetchApiWorker(private val context: Context, workerParams: WorkerParameter
             val gson = Gson()
             val typeToken = object : TypeToken<List<List<String>>>() {}
 
-            var selectedKlasse = SharedPrefsUtil.readStringSetting(Keys.SELECTED_NOTIFICATION_KLASSE,context).first()
+            val selectedKlasse =
+                SharedPrefsUtil.readStringSetting(Keys.SELECTED_NOTIFICATION_KLASSE, context)
+                    .first()
 
-            var before: List<List<String>>
-            try {
-                val reader: FileReader = FileReader(context.cacheDir.path + "/" + "classes.json")
-                before = gson.fromJson(reader.readText(), typeToken.type)
+            val before: List<List<String>> = try {
+                val reader = FileReader(context.cacheDir.path + "/" + "classes.json")
+                gson.fromJson(reader.readText(), typeToken.type)
 
 
             } catch (e: java.lang.Exception) {
-                before = listOf(listOf(""))
+                listOf(listOf(""))
             }
 
             val after: List<List<String>> = apiService.getSubsNext()
@@ -109,7 +110,7 @@ class FetchApiWorker(private val context: Context, workerParams: WorkerParameter
 
 
     private suspend fun startForegroundService(klasse: String) {
-        SharedPrefsUtil.writeStringSetting(Keys.SELECTED_KLASSE,klasse, context = context)
+        SharedPrefsUtil.writeStringSetting(Keys.SELECTED_KLASSE, klasse, context = context)
         val notificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val resultIntent =

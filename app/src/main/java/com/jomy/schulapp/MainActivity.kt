@@ -15,7 +15,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -51,7 +50,6 @@ class MainActivity : ComponentActivity() {
         var notornot = "foodpage"
 
 
-
         val foodModel: FoodViewModel by viewModels()
         val subsModel: SubsViewModel by viewModels()
         val subsNextModel: SubsNextViewModel by viewModels()
@@ -70,7 +68,10 @@ class MainActivity : ComponentActivity() {
             val systemUiController = rememberSystemUiController()
 
             LaunchedEffect(key1 = Unit, block = {
-                WorkerUtil.addWorker(context,!SharedPrefsUtil.readBooleanSetting(Keys.NOTIFICATIONS_ENABLED,context).first())
+                WorkerUtil.addWorker(
+                    context,
+                    !SharedPrefsUtil.readBooleanSetting(Keys.NOTIFICATIONS_ENABLED, context).first()
+                )
                 foodModel.loadFood()
                 subsModel.loadSubs()
                 subsNextModel.loadSubs()

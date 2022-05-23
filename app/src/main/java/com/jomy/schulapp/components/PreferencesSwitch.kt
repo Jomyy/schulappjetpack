@@ -24,19 +24,19 @@ fun PreferencesSwitch(
     icon: ImageVector,
     key: String,
     onChange: (newKlasse: Boolean) -> Unit = {},
-    model:PreferencesSwitchViewModel
+    model: PreferencesSwitchViewModel
 ) {
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit, block = {
-        model.readSetting(key,context)
+        model.readSetting(key, context)
     })
 
 
     Row(modifier = Modifier
         .height(65.dp)
         .clickable {
-            model.updateSetting(key,!model.enabled, context)
+            model.updateSetting(key, !model.enabled, context)
             onChange(!model.enabled)
         }
         .padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -53,7 +53,7 @@ fun PreferencesSwitch(
             )
         }
         Switch(checked = model.enabled, onCheckedChange = {
-            model.updateSetting(key,it, context)
+            model.updateSetting(key, it, context)
             onChange(model.enabled)
         })
 
@@ -61,18 +61,20 @@ fun PreferencesSwitch(
 
 
 }
-class PreferencesSwitchViewModel: ViewModel(){
+
+class PreferencesSwitchViewModel : ViewModel() {
     private val _enabled = mutableStateOf(false)
     val enabled get() = _enabled.value
-    fun updateSetting(key:String,newVal:Boolean,context: Context){
-        viewModelScope.launch{
-            SharedPrefsUtil.writeBooleanSetting(key,newVal, context = context)
+    fun updateSetting(key: String, newVal: Boolean, context: Context) {
+        viewModelScope.launch {
+            SharedPrefsUtil.writeBooleanSetting(key, newVal, context = context)
             readSetting(key, context)
         }
     }
-    fun readSetting(key:String,context:Context){
+
+    fun readSetting(key: String, context: Context) {
         viewModelScope.launch {
-            SharedPrefsUtil.readBooleanSetting(key,context).collect{
+            SharedPrefsUtil.readBooleanSetting(key, context).collect {
                 _enabled.value = it
             }
         }
