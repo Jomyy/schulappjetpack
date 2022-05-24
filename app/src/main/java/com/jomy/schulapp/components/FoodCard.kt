@@ -35,11 +35,11 @@ fun FoodCard(foodData: FoodDay) {
         ) {
             Text(
                 foodData.day,
-                fontSize = 19.sp
+                style = MaterialTheme.typography.titleLarge
             )
             Divider(
                 modifier = Modifier
-                    .padding(top = 10.dp, bottom = 0.dp)
+                    .padding(top = 10.dp, bottom = 10.dp)
                     .height(0.dp)
                     .fillMaxWidth()
             )

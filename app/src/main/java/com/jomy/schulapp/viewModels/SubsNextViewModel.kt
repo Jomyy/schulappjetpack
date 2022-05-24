@@ -71,10 +71,11 @@ class SubsNextViewModel : ViewModel() {
 
             errorMessage.value = ""
 
-            delay(250)
+
             val instance = APIService.getInstance()
             try {
                 _allSubs.clear()
+                delay(300)
                 _allSubs.addAll(instance.getSubsNext())
 
             } catch (e: Exception) {

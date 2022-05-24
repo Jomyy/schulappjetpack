@@ -172,7 +172,7 @@ fun SubsPage(
                             }
                         }
 
-                    } else {
+                    } else if(!model.isRefreshing.collectAsState().value) {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -188,6 +188,14 @@ fun SubsPage(
                                 )
                             }
 
+                        }
+                    } else {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator()
                         }
                     }
 

@@ -49,7 +49,7 @@ fun SubCard(subData: SubData) {
             Text(
                 stringResource(id = R.string.lessontype) + subData.fach,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
             Divider(
                 modifier = Modifier
@@ -61,7 +61,7 @@ fun SubCard(subData: SubData) {
             Text(
                 stringResource(id = R.string.lesson) + subData.stunde,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
             Divider(
                 modifier = Modifier
@@ -73,7 +73,7 @@ fun SubCard(subData: SubData) {
             Text(
                 stringResource(id = R.string.teacher) + subData.lehrer,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
             Divider(
                 modifier = Modifier
@@ -84,7 +84,7 @@ fun SubCard(subData: SubData) {
             Text(
                 stringResource(id = R.string.room) + subData.raum,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
         }
 

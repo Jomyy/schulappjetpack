@@ -6,10 +6,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Fastfood
+import androidx.compose.material.icons.filled.PermContactCalendar
+import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.Fastfood
+import androidx.compose.material.icons.outlined.PermContactCalendar
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -124,9 +131,18 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             icon = {
-                                Icon(
-                                    Icons.Rounded.Fastfood, "Home"
-                                )
+                                Crossfade(targetState = foodSelected.value) {
+                                    if (it) {
+                                        Icon(
+                                            Icons.Default.Fastfood, "Home"
+                                        )
+                                    } else {
+                                        Icon(
+                                            Icons.Outlined.Fastfood, "Home"
+                                        )
+                                    }
+                                }
+
                             },
                             modifier = Modifier.padding(bottom = 0.dp)
                         )
@@ -144,9 +160,17 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             icon = {
-                                Icon(
-                                    Icons.Rounded.CalendarToday, "Subs"
-                                )
+                                Crossfade(targetState = subsSelected.value) {
+                                    if (it) {
+                                        Icon(
+                                            Icons.Default.CalendarToday, "Home"
+                                        )
+                                    } else {
+                                        Icon(
+                                            Icons.Outlined.CalendarToday, "Home"
+                                        )
+                                    }
+                                }
                             },
                             modifier = Modifier.padding(bottom = 0.dp)
                         )
@@ -163,9 +187,17 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             icon = {
-                                Icon(
-                                    Icons.Rounded.PermContactCalendar, "substitutionsnextpage"
-                                )
+                                Crossfade(targetState = subsNextSelected.value) {
+                                    if (it) {
+                                        Icon(
+                                            Icons.Default.PermContactCalendar, "Home"
+                                        )
+                                    } else {
+                                        Icon(
+                                            Icons.Outlined.PermContactCalendar, "Home"
+                                        )
+                                    }
+                                }
                             }, modifier = Modifier.padding(bottom = 0.dp)
                         )
 
@@ -175,21 +207,21 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(navController = navController, startDestination = notornot) {
                             composable("foodpage") {
-                                FoodPage(foodModel,subsModel,subsNextModel)
+                                FoodPage(foodModel, subsModel, subsNextModel)
                                 foodSelected.value = true
                                 subsSelected.value = false
                                 subsNextSelected.value = false
 
                             }
                             composable("subspage") {
-                                SubsPage(subsModel,foodModel,subsNextModel)
+                                SubsPage(subsModel, foodModel, subsNextModel)
                                 foodSelected.value = false
                                 subsSelected.value = true
                                 subsNextSelected.value = false
 
                             }
                             composable("subsnextpage") {
-                                SubsNextPage(subsNextModel,foodModel,subsModel)
+                                SubsNextPage(subsNextModel, foodModel, subsModel)
                                 foodSelected.value = false
                                 subsSelected.value = false
                                 subsNextSelected.value = true

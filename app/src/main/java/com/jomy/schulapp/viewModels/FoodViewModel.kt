@@ -30,6 +30,7 @@ class FoodViewModel : ViewModel() {
             try {
 
                 _food.clear()
+
                 _food.addAll(apiService.getFood())
 
             } catch (e: Exception) {
@@ -44,11 +45,12 @@ class FoodViewModel : ViewModel() {
     fun refresh() {
         _isRefreshing.value = true
         viewModelScope.launch {
-            delay(300)
+
             val apiService = APIService.getInstance()
 
             errorMessage = try {
                 _food.clear()
+                delay(300)
                 _food.addAll(apiService.getFood())
                 ""
             } catch (e: Exception) {
