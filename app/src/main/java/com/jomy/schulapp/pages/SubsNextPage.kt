@@ -137,7 +137,7 @@ fun SubsNextPage(
                                     )
                                     .fillMaxSize(),
                                 columns = GridCells.Adaptive(300.dp),
-
+                                contentPadding = PaddingValues(bottom = 60.dp)
 
                                 ) {
 
@@ -162,12 +162,12 @@ fun SubsNextPage(
 
 
                                 }
-                                item {
+                                /*item {
                                     Column(modifier = Modifier.padding(vertical = 30.dp)) {
 
                                     }
                                 }
-
+                                */
 
                             }
                         }

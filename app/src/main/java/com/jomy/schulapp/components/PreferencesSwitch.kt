@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jomy.schulapp.util.SharedPrefsUtil
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -74,9 +75,7 @@ class PreferencesSwitchViewModel : ViewModel() {
 
     fun readSetting(key: String, context: Context) {
         viewModelScope.launch {
-            SharedPrefsUtil.readBooleanSetting(key, context).collect {
-                _enabled.value = it
-            }
+            _enabled.value = SharedPrefsUtil.readBooleanSetting(key, context).first()
         }
     }
 }

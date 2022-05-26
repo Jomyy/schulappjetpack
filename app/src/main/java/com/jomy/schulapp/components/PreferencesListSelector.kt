@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jomy.schulapp.util.SharedPrefsUtil
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -84,9 +85,7 @@ class PrefListSelectorViewModel : ViewModel() {
 
     fun readValue(key: String, context: Context) {
         viewModelScope.launch {
-            SharedPrefsUtil.readStringSetting(key, context).collect {
-                _selectedValue.value = it
-            }
+            _selectedValue.value = SharedPrefsUtil.readStringSetting(key,context).first()
         }
     }
 }
