@@ -20,13 +20,10 @@ import com.jomy.schulapp.R
 @Composable
 fun SelectorDialog(
     onDismiss: () -> Unit,
-
     onPositiveClick: (newKlasse: String) -> Unit,
     klassen: List<String>,
     oldSelection: String
 ) {
-
-
     Dialog(onDismissRequest = onDismiss) {
         Scaffold(modifier = Modifier
             .fillMaxHeight(0.97f)
