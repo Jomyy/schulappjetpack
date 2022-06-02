@@ -94,17 +94,13 @@ class MainActivity : ComponentActivity() {
             }
 
             SchulAppTheme {
+                val topcolor = TopAppBarDefaults.smallTopAppBarColors().containerColor(scrollFraction = 1f)
                 val matcolors = MaterialTheme.colorScheme
                 SideEffect {
                     systemUiController.setStatusBarColor(
-                        color = Color(
-                            ColorUtils.blendARGB(
-                                matcolors.surface.toArgb(),
-                                matcolors.primary.toArgb(),
-                                0.09f
-                            )
-                        )
+                        color = topcolor.value
                     )
+
                     systemUiController.setNavigationBarColor(
                         color = Color(
                             ColorUtils.blendARGB(
@@ -233,10 +229,12 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }, topBar = {
-                    Surface(shadowElevation = 4.dp, tonalElevation = 4.dp) {
+
                         SmallTopAppBar(
                             scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(
                                 canScroll = { true }),
+                            colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = topcolor.value)
+                            ,
                             title = { Text(stringResource(id = R.string.app_name)) },
                             modifier = Modifier.padding(top = 0.dp),
                             actions = {
@@ -252,7 +250,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
-                    }
+
 
                 }, containerColor = MaterialTheme.colorScheme.surface)
 
