@@ -1,6 +1,6 @@
-## SchulApp
+# SchulApp
 
-# Screenshots
+## Screenshots
 <table>
   <tbody>
     <td width="33%">
@@ -17,7 +17,7 @@
     </td>
       </tbody>
 </table>
-# Features
+<h2>Features</h2>
 
 - [x] Essensplan Sehen 
 - [x] Vertretungen Sehen
